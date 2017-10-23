@@ -1,0 +1,16 @@
+/**
+    auth: wormer@wormer.cn
+    proj: site_salary
+    date: 2017-10-12
+    desc:
+        site_salary.set_db
+        help : https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+**/
+
+1.基础环境说明：
+    pip install django==1.10.5
+    pip install MySQL-python==1.2.5
+    pip install django-grappelli==2.9.1
+    pip install djangorestframework==3.5.4
+    pip install markdown==2.6.9
+    pip install django-filter==1.0.4

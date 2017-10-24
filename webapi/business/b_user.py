@@ -17,7 +17,7 @@ from site_salary.common.untils import get_paging_index
 from webapi.serializers.s_user import S_L_User
 
 
-def get_user_by_params(p_size, p_numb, username, sortdatafield, sortorder):
+def get_user_by_params(p_size, p_numb, username, email, sortdatafield, sortorder):
     """
 
         :param p_size:
@@ -30,6 +30,9 @@ def get_user_by_params(p_size, p_numb, username, sortdatafield, sortorder):
 
     if username:
         query['username__contains'] = username
+
+    if email:
+        query['email__contains'] = email
 
     sortdatafield = sortdatafield if sortdatafield else "id"
 

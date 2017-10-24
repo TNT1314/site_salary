@@ -29,11 +29,11 @@ class UserListGet(UserApiView):
         p_size = request.params.pagesize
         p_numb = request.params.pagenum
         username = request.params.username
+        email = request.params.email
         sortdatafield = request.params.sortdatafield
         sortorder = request.params.sortorder
 
-
-        result = get_user_by_params(p_size, p_numb, username, sortdatafield, sortorder)
+        result = get_user_by_params(p_size, p_numb, username, email, sortdatafield, sortorder)
 
         return result
 
@@ -43,6 +43,7 @@ class UserListGet(UserApiView):
             ('pagesize', fields.IntegerField(required=True, help_text=u"页面数据")),
             ('pagenum', fields.IntegerField(required=True, help_text=u"当前页数")),
             ('username', fields.CharField(required=False, help_text=u"登录用户")),
+            ('email', fields.CharField(required=False, help_text=u"邮件地址")),
             ('sortdatafield', fields.CharField(required=False, help_text=u"排序字段")),
             ('sortorder', fields.CharField(required=False, help_text=u"排序方式（asc:升序,des:降序）")),
         )

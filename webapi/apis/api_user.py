@@ -10,9 +10,12 @@ from __future__ import unicode_literals
         site_salary
 """
 
+import logging
 from mixrestview import ViewSite, fields
 from site_salary.common.baseapiview import UserApiView
-from webapi.business.b_user import get_user_by_params
+from webapi.business.b_user import (
+    get_users_by_name, get_users_by_params,get_user_by_id
+)
 
 
 site = ViewSite(name="user", app_name="webapi")
@@ -33,7 +36,7 @@ class UserListGet(UserApiView):
         sortdatafield = request.params.sortdatafield
         sortorder = request.params.sortorder
 
-        result = get_user_by_params(p_size, p_numb, username, email, sortdatafield, sortorder)
+        result = get_users_by_params(p_size, p_numb, username, email, sortdatafield, sortorder)
 
         return result
 
@@ -47,5 +50,52 @@ class UserListGet(UserApiView):
             ('sortdatafield', fields.CharField(required=False, help_text=u"排序字段")),
             ('sortorder', fields.CharField(required=False, help_text=u"排序方式（asc:升序,des:降序）")),
         )
+
+@site
+class UserListGetByName(UserApiView):
+
+    """
+        接口说明部分
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        username = request.params.username
+
+        result = get_users_by_name(username)
+
+        self.logger.error("UserListGetByName 查询参数:".format(username))
+
+        return result
+
+    class Meta:
+        path = 'list/name/get'
+        param_fields = (
+            ('username', fields.CharField(required=False, help_text=u"登录用户")),
+        )
+
+@site
+class UserGetById(UserApiView):
+
+    """
+        接口说明部分
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        id = request.params.id
+
+        result = get_user_by_id(id)
+
+        self.logger.error("UserGetById 查询参数:".format(id))
+
+        return result
+
+    class Meta:
+        path = 'get/id'
+        param_fields = (
+            ('id', fields.CharField(required=True, help_text=u"用户唯一主键")),
+        )
+
 
 urlpatterns = site.urlpatterns

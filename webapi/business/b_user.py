@@ -17,7 +17,30 @@ from site_salary.common.untils import get_paging_index
 from webapi.serializers.s_user import S_L_User
 
 
-def get_user_by_params(p_size, p_numb, username, email, sortdatafield, sortorder):
+def get_users_by_name(username):
+    """
+        :param p_size:
+        :param p_num:
+        :return:
+    """
+
+    results = dict()
+
+    query = dict()
+
+    if username:
+        query['username__contains'] = username
+
+    obj_user = User.objects.filter(**query).order_by("username")
+
+    ser_user = S_L_User(obj_user, many=True)
+
+    results['DataRows'] = ser_user.data
+
+    return results
+
+
+def get_users_by_params(p_size, p_numb, username, email, sortdatafield, sortorder):
     """
 
         :param p_size:
@@ -54,3 +77,24 @@ def get_user_by_params(p_size, p_numb, username, email, sortdatafield, sortorder
     results['DataRows'] = ser_user.data
 
     return results
+
+
+def get_user_by_id(id):
+    """
+
+    :param id:
+    :return:
+    """
+    result = dict()
+
+    obj_user = User.objects.get(pk=id)
+
+    ser_user = S_L_User(obj_user)
+
+    result['code'] = 0
+
+    result['message'] = u"查询成功!"
+
+    result['json'] = ser_user.data
+
+    return result

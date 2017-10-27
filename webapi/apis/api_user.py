@@ -5,97 +5,58 @@ from __future__ import unicode_literals
 """ 
     auth: wormer@wormer.cn
     proj: site_salary
-    date: 2017-10-13
+    date: 2017-10-26
     desc: 
         site_salary
 """
 
-import logging
 from mixrestview import ViewSite, fields
-from site_salary.common.baseapiview import UserApiView
-from webapi.business.b_user import (
-    get_users_by_name, get_users_by_params,get_user_by_id
-)
+
+from .api_base_view import BaseApiView, CompanyUserApiView
+from site_salary.common.backformat import JsonResponse
+from webapi.business.bus_user import user_login, get_user_info
 
 
 site = ViewSite(name="user", app_name="webapi")
 
 
 @site
-class UserListGet(UserApiView):
-
+class UserLogin(BaseApiView):
     """
-        接口说明部分
-    """
-
-    def get_context(self, request, *args, **kwargs):
-        p_size = request.params.pagesize
-        p_numb = request.params.pagenum
-        username = request.params.username
-        email = request.params.email
-        sortdatafield = request.params.sortdatafield
-        sortorder = request.params.sortorder
-
-        result = get_users_by_params(p_size, p_numb, username, email, sortdatafield, sortorder)
-
-        return result
-
-    class Meta:
-        path = 'list/get'
-        param_fields = (
-            ('pagesize', fields.IntegerField(required=True, help_text=u"页面数据")),
-            ('pagenum', fields.IntegerField(required=True, help_text=u"当前页数")),
-            ('username', fields.CharField(required=False, help_text=u"登录用户")),
-            ('email', fields.CharField(required=False, help_text=u"邮件地址")),
-            ('sortdatafield', fields.CharField(required=False, help_text=u"排序字段")),
-            ('sortorder', fields.CharField(required=False, help_text=u"排序方式（asc:升序,des:降序）")),
-        )
-
-@site
-class UserListGetByName(UserApiView):
-
-    """
-        接口说明部分
+        企业用户登录接口
     """
 
     def get_context(self, request, *args, **kwargs):
 
         username = request.params.username
+        password = request.params.password
 
-        result = get_users_by_name(username)
+        code, mesg, data = user_login(request, username, password)
 
-        self.logger.error("UserListGetByName 查询参数:".format(username))
-
-        return result
+        return JsonResponse(code, mesg, data)
 
     class Meta:
-        path = 'list/name/get'
+        path = 'login'
         param_fields = (
-            ('username', fields.CharField(required=False, help_text=u"登录用户")),
+            ('username', fields.CharField(required=True, help_text=u"企业账号")),
+            ('password', fields.CharField(required=True, help_text=u"登录密码")),
         )
 
-@site
-class UserGetById(UserApiView):
 
+@site
+class UserInfoGet(CompanyUserApiView):
     """
-        接口说明部分
+        企业用户登录接口
     """
 
     def get_context(self, request, *args, **kwargs):
 
-        id = request.params.id
+        code, mesg, data = get_user_info(request.user)
 
-        result = get_user_by_id(id)
-
-        self.logger.error("UserGetById 查询参数:".format(id))
-
-        return result
+        return JsonResponse(code, mesg, data)
 
     class Meta:
-        path = 'get/id'
-        param_fields = (
-            ('id', fields.CharField(required=True, help_text=u"用户唯一主键")),
-        )
-
+        path = 'info/get'
 
 urlpatterns = site.urlpatterns
+

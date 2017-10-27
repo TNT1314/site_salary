@@ -35,8 +35,8 @@ LOGGING = {
     },
     'handlers': {
         # 记录到日志文件(需要创建对应的目录，否则会出错)
-        'debug': {
-            'level': 'DEBUG',
+        'logfile': {
+            'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(log_path, 'default.log'),  # 日志输出文件
             'maxBytes': 1024*1024*5,   # 文件大小
@@ -57,17 +57,17 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['debug', 'mail_admins'],
-            'level': 'DEBUG',
+            'handlers': ['logfile', 'mail_admins'],
+            'level': 'INFO',
             'propagate': True
         },
         'django.request': {
-            'handlers': ['debug', 'mail_admins', 'console'],
+            'handlers': ['logfile', 'mail_admins', 'console'],
             'level': 'ERROR',
             'propagate': True,
         },
         'api_view': {
-            'handlers': ['debug', 'mail_admins', 'console'],
+            'handlers': ['logfile', 'mail_admins', 'console'],
             'level': 'DEBUG',
             'propagate': True
         },

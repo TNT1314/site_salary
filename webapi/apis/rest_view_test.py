@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 """
  
 from mixrestview import ViewSite, fields, validators
-from site_salary.common.baseapiview import SalaryApiView
+from .api_base_view import SalaryApiView
 
 
 site = ViewSite(name="test", app_name="webapi")

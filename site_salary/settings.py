@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'mixrestview',
+    'website',
 ]
 
 MIDDLEWARE = [
@@ -109,6 +110,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = '/static/'
 
+
 # +++++++++++++++++++++++static and media setting @wormer
 STATIC_ROOT = 'static'  # os.path.join(os.path.dirname(__file__), 'static')
 STATICFILES_DIRS = (
@@ -129,11 +131,18 @@ LOCALE_PATHS = (
     os.path.join(os.path.dirname(__file__), 'locale'),
 )
 
+# backends setting
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'website.bakends.company_bakend.CompanyUserBackend',
+)
+
 # file system instead of into memory.
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1024*1024*5
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1024*1024*5
 
 from .setting.set_db import *
+from .setting.set_email import *
 from .setting.set_logging import *
 from .setting.set_grappelli import *
 from .setting.set_restframework import *

@@ -14,10 +14,13 @@ from django.conf.urls import url, include
 
 
 urlpatterns = [
-    # 测试接口
-    url(r'^test/', include('webapi.apis.rest_view_test')),
-
-    # 用户接口
+    # 企业用户接口类
     url(r'^user/', include('webapi.apis.api_user')),
+
+    # 测试接口
+    url(r'^test/one/', include('webapi.apis.rest_view_test')),
+
+    # 测试接口
+    url(r'^test/two/', include('webapi.apis.api_test')),
 ]
  

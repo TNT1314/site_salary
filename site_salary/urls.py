@@ -37,12 +37,11 @@ urlpatterns = [
     # rest_framework url
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
+    # rest_framework url
+    url(r'^api/', include('webapi.urls', namespace='webapi')),
 
     url( r'^static/(?P<path>.*)$', serve, { 'document_root': settings.STATIC_URL}),
 
     # media url
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-
-    # rest_framework url
-    url(r'^api/', include('webapi.urls', namespace='webapi')),
 ]

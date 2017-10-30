@@ -1,5 +1,5 @@
 #! usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
 """ 
@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 
 
 #! usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 """
     用户自动登录方法
 """

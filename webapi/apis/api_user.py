@@ -1,5 +1,5 @@
 #! usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
 """ 
@@ -75,6 +75,23 @@ class UserInfoGet(CompanyUserApiView):
 
     class Meta:
         path = 'info/get'
+
+
+
+@site
+class UserMenuGet(CompanyUserApiView):
+    """
+        企业用户登录接口
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        code, mesg, data = get_user_info(request.user)
+
+        return JsonResponse(code, mesg, data)
+
+    class Meta:
+        path = 'menus/get'
 
 urlpatterns = site.urlpatterns
 

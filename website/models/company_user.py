@@ -1,5 +1,5 @@
 #! usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
 """ 
@@ -54,4 +54,4 @@ class CompanyUser(AbstractBaseUser, ModelsBase):
         verbose_name = verbose_name_plural = '公司账号信息'
 
     def __unicode__(self):
-        return unicode('{}({})'.format(self.username, self.mobile))
+        return u'{}({})'.format(self.username, self.mobile)

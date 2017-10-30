@@ -1,5 +1,5 @@
 #! usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
 """ 
@@ -90,15 +90,10 @@ class ModelsBase(TimeFieldModel):
 
     def change_logging(self, force_insert=None, force_update=None, using=None, update_fields=None):
         try:
-            TimeFieldModel.save( self, force_insert=force_insert, force_update=force_update,
-                using=using, update_fields=update_fields
-            )
-        except OperationalError, exp:
-
+            TimeFieldModel.save( self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+        except OperationalError as exp:
             if exp.args[0] == 1213 and not transaction.is_dirty(self._state.db):
                 time.sleep(0.01)
-                return TimeFieldModel.save(
-                    self, force_insert=force_insert, force_update=force_update,
-                    using=using, update_fields=update_fields
+                return TimeFieldModel.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
                 )
             raise

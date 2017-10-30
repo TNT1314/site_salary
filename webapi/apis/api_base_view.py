@@ -1,5 +1,5 @@
 #! usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
 """ 
@@ -16,6 +16,7 @@ __all__ = [
 
 import logging
 
+from rest_framework.response import Response
 from mixrestview.apiview import APIView
 
 from website.decorators.userdecorator import NeedCompanyUser
@@ -26,6 +27,9 @@ class BaseApiView(APIView):
         定义日志参数
     """
     logger = logging.getLogger("api_view")
+
+    def handle_exception(self, exc):
+        return Response(exc)
 
 
 class UserApiView(BaseApiView):

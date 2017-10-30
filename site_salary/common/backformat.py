@@ -17,6 +17,7 @@ def JsonResponse(code, mess, data):
     back_data = OrderedDict()
     back_data["code"] = code
     back_data["code_desc"] = mess
+    back_data["json"] = dict()
     back_data["json"] = data
     return back_data
 

@@ -14,7 +14,9 @@ from mixrestview import ViewSite, fields
 
 from .api_base_view import BaseApiView, CompanyUserApiView
 from site_salary.common.backformat import JsonResponse
-from webapi.business.bus_user import user_login, get_user_info
+from webapi.business.bus_user import (
+    user_login, user_login_out, get_user_info
+)
 
 
 site = ViewSite(name="user", app_name="webapi")
@@ -41,6 +43,22 @@ class UserLogin(BaseApiView):
             ('username', fields.CharField(required=True, help_text=u"企业账号")),
             ('password', fields.CharField(required=True, help_text=u"登录密码")),
         )
+
+
+@site
+class UserLogout(CompanyUserApiView):
+    """
+        企业用户登录接口
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        code, mesg, data = user_login_out(request)
+
+        return JsonResponse(code, mesg, data)
+
+    class Meta:
+        path = 'logout'
 
 
 @site

@@ -54,6 +54,19 @@ def user_login(request, username, password):
     return code, mesg, data
 
 
+def user_login_out(request):
+    """
+        用户登出系统
+        :param request:
+        :return:
+    """
+    code = ApiCode.success.code
+    mesg = ApiCode.success.mesg
+    logout(request)
+    return code, mesg, dict()
+
+
+
 def get_user_info(user):
     """
         获取用户信息

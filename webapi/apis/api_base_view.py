@@ -38,7 +38,7 @@ class SalaryApiView(BaseApiView):
 
 class CompanyUserApiView(BaseApiView):
     """
-        定义公司用户装饰起
+        定义公司用户装饰器
     """
 
     class Meta:

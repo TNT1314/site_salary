@@ -21,13 +21,13 @@ class S_P_CompanyUser(serializers.ModelSerializer):
 
     is_staff = serializers.SerializerMethodField()
     is_active = serializers.SerializerMethodField()
-    address = serializers.SerializerMethodField()
+    company_name = serializers.SerializerMethodField()
 
     class Meta:
         model = CompanyUser
         fields = [
             "id", "username", "name",
-            "is_staff", "is_active", "address",
+            "is_staff", "is_active", "company_name",
         ]
 
     def get_is_staff(self, obj):
@@ -46,10 +46,10 @@ class S_P_CompanyUser(serializers.ModelSerializer):
         """
         return u"正常" if obj.is_active else u"销户"
 
-    def get_address(self, obj):
+    def get_company_name(self, obj):
         """
             用户公司地址
             :param obj:
             :return:
         """
-        return obj.company.address if obj.company else u"暂无公司或暂无公司地址"
+        return obj.company.name if obj.company else u"暂无公司或暂无公司地址"

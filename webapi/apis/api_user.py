@@ -8,6 +8,7 @@ from __future__ import unicode_literals
     date: 2017-10-26
     desc: 
         site_salary
+        用户类业务方法
 """
 
 from mixrestview import ViewSite, fields
@@ -15,7 +16,7 @@ from mixrestview import ViewSite, fields
 from .api_base_view import BaseApiView, CompanyUserApiView
 from site_salary.common.backformat import JsonResponse
 from webapi.business.bus_user import (
-    user_login, user_login_out, get_user_info
+    user_login, user_login_out, get_user_info, get_user_menus
 )
 
 
@@ -86,7 +87,7 @@ class UserMenuGet(CompanyUserApiView):
 
     def get_context(self, request, *args, **kwargs):
 
-        code, mesg, data = get_user_info(request.user)
+        code, mesg, data = get_user_menus(request.user)
 
         return JsonResponse(code, mesg, data)
 

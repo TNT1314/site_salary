@@ -129,7 +129,7 @@ def search_user_menus(user):
 
 
 
-def get_user_info(user):
+def get_user_menus(user):
     """
         获取用户信息
         :param user

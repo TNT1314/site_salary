@@ -86,7 +86,7 @@ def get_user_info(user):
         获取用户信息
         :param user
     """
-    
+
     code = ApiCode.success.code
     mess = ApiCode.success.mess
 

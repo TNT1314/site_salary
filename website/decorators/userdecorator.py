@@ -47,11 +47,11 @@ def NeedCompanyUser(view, mark=''):
         _request = args[0]
 
         if isinstance(_request.user, AnonymousUser):
-            response_context = MessResponse(ApiCode.success.code, ApiCode.success.mesg)
+            response_context = MessResponse(ApiCode.success.code, ApiCode.success.mess)
             return Response(response_context)
         else:
             if not _get_permission(_request.user):
-                response_context = MessResponse(ApiCode.nopermission.code, ApiCode.nopermission.mesg)
+                response_context = MessResponse(ApiCode.nopermission.code, ApiCode.nopermission.mess)
                 return Response(response_context)
             else:
                 res_view = view(*args, **kwargs)

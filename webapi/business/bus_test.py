@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 
 from site_salary.common.untils import get_paging_index
 
-from webapi.serializers.s_user import S_L_User
+from webapi.serializers.ser_user import S_L_User
 
 
 def get_users_by_name(username):

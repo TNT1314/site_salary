@@ -23,16 +23,13 @@ from django_extensions.db.fields import (
 
 
 class TimeFieldModel(models.Model):
-    create_time = CreationDateTimeField('创建时间', db_index=True, editable=False)
-    change_time = ModificationDateTimeField('修改时间', db_index=True, editable=False)
+    add_time = CreationDateTimeField('创建时间', db_index=True, editable=False)
+    cha_time = ModificationDateTimeField('修改时间', db_index=True, editable=False)
 
     class Meta:
         abstract = True
-        get_latest_by = 'change_time'
-        ordering = ('-change_time', '-create_time',)
-
-    def __unicode__(self):
-        return unicode("{}({})".format(self.__class__.__name__, self.pk))
+        get_latest_by = 'add_time'
+        ordering = ('-cha_time', '-add_time',)
 
     def history_log(self, user, action=CHANGE, message=''):
         """
@@ -48,6 +45,15 @@ class TimeFieldModel(models.Model):
             change_message=message
         )
 
+class CompanyTimeFieldModel(TimeFieldModel):
+    add_com_time = CreationDateTimeField('公司用户创建时间', db_index=True, editable=False)
+    cha_com_time = ModificationDateTimeField('公司用户修改时间', db_index=True, editable=False)
+
+    class Meta:
+        abstract = True
+        get_latest_by = 'cha_com_time'
+        ordering = ('-cha_com_time', '-add_com_time',)
+
 
 class ModelsBase(TimeFieldModel):
     """
@@ -56,16 +62,12 @@ class ModelsBase(TimeFieldModel):
     valid = models.BooleanField("有效", default=True, null=False, db_index=True)
     remarks = models.CharField('备注', max_length=500, null=True, blank=True)
 
-    create_user = models.ForeignKey("auth.user", default=None,
+    add_user = models.ForeignKey("auth.user", default=None,
             editable=False, null=True, blank=True, on_delete=models.DO_NOTHING,
             related_name='+', db_constraint=False, verbose_name='创建人员', db_index=True)
-    change_user = models.ForeignKey("auth.user", default=None,
+    cha_user = models.ForeignKey("auth.user", default=None,
             editable=False, null=True, blank=True, on_delete=models.DO_NOTHING,
             related_name='+', db_constraint=False, verbose_name='修改人员', db_index=True)
-
-    @staticmethod
-    def autocomplete_search_fields():
-        return ['pk__exact']
 
     class Meta:
         abstract = True
@@ -81,19 +83,18 @@ class ModelsBase(TimeFieldModel):
                 if f not in fd: update_fields.remove(f)
 
             # change the change_time
-            if 'change_time' not in update_fields:
+            if 'cha_time' not in update_fields:
 
-                update_fields.append('change_time')
+                update_fields.append('cha_time')
 
         self.change_logging(force_insert=force_insert, force_update=force_update,
                             using=using, update_fields=update_fields)
 
     def change_logging(self, force_insert=None, force_update=None, using=None, update_fields=None):
         try:
-            TimeFieldModel.save( self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+            TimeFieldModel.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
         except OperationalError as exp:
             if exp.args[0] == 1213 and not transaction.is_dirty(self._state.db):
                 time.sleep(0.01)
-                return TimeFieldModel.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
-                )
+                return TimeFieldModel.save(self, force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
             raise

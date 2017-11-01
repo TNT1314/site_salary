@@ -32,6 +32,9 @@ admin.site.register(GroupMenuRel)
 from website.models.user_menu_rel import UserMenuRel
 admin.site.register(UserMenuRel)
 
+# 雇员
+from website.models.employee_info import EmployeeInfo
+admin.site.register(EmployeeInfo)
 
 
 

@@ -15,7 +15,16 @@ from rest_framework import serializers
 from website.models.menu_info import MenuInfo
 
 
-class S_U_Menus(serializers.ModelSerializer):
+class S_Menu(serializers.ModelSerializer):
+    """
+        菜单序列化
+    """
+
+    class Meta:
+        model = MenuInfo
+        fields = ["all"]
+
+class S_U_Menu(serializers.ModelSerializer):
     """
         用户权限序列化
     """

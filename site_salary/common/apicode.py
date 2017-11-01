@@ -20,11 +20,12 @@ from .enum import Enum
 
 
 ApiCode = Enum(
+    unkonwnerror= Enum(code=0, mess="未知错误"),
     usernotexist= Enum(code=1, mess="用户不存在"),
     pasworderror= Enum(code=2, mess="用户或密码错误"),
     unsernologin= Enum(code=3, mess="用户未登录"),
     nopermission= Enum(code=4, mess="用户未授权"),
     userhadlogin= Enum(code=5, mess="用户已登录"),
 
-    success=Enum(code=10000, mess="成功"),
+    success=Enum(code=10000, mess="请求成功"),
 )

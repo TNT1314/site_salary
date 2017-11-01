@@ -16,7 +16,8 @@ from mixrestview import ViewSite, fields
 from .api_base_view import BaseApiView, CompanyUserApiView
 from site_salary.common.backformat import JsonResponse
 from webapi.business.bus_user import (
-    user_login, user_login_out, get_user_info, get_user_menus
+    user_login, user_login_out, get_user_info, get_user_menus,
+    get_menus_permission
 )
 
 
@@ -34,9 +35,9 @@ class UserLogin(BaseApiView):
         username = request.params.username
         password = request.params.password
 
-        code, mesg, data = user_login(request, username, password)
+        code, mess, data = user_login(request, username, password)
 
-        return JsonResponse(code, mesg, data)
+        return JsonResponse(code, mess, data)
 
     class Meta:
         path = 'login'
@@ -49,14 +50,14 @@ class UserLogin(BaseApiView):
 @site
 class UserLogout(CompanyUserApiView):
     """
-        企业用户登录接口
+        企业用户注销接口
     """
 
     def get_context(self, request, *args, **kwargs):
 
-        code, mesg, data = user_login_out(request)
+        code, mess, data = user_login_out(request)
 
-        return JsonResponse(code, mesg, data)
+        return JsonResponse(code, mess, data)
 
     class Meta:
         path = 'logout'
@@ -65,34 +66,54 @@ class UserLogout(CompanyUserApiView):
 @site
 class UserInfoGet(CompanyUserApiView):
     """
-        企业用户登录接口
+        企业用户获取用户信息接口
     """
 
     def get_context(self, request, *args, **kwargs):
 
-        code, mesg, data = get_user_info(request.user)
+        code, mess, data = get_user_info(request.user)
 
-        return JsonResponse(code, mesg, data)
+        return JsonResponse(code, mess, data)
 
     class Meta:
         path = 'info/get'
 
 
-
 @site
 class UserMenuGet(CompanyUserApiView):
+    """
+        企业用户获取菜单信息
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        code, mess, data = get_user_menus(request.user)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'menus/get'
+
+
+@site
+class ModalPermissionGet(CompanyUserApiView):
     """
         企业用户登录接口
     """
 
     def get_context(self, request, *args, **kwargs):
 
-        code, mesg, data = get_user_menus(request.user)
+        modal = request.params.modal
 
-        return JsonResponse(code, mesg, data)
+        code, mess, data = get_menus_permission(request.user, modal)
+
+        return JsonResponse(code, mess, data)
 
     class Meta:
-        path = 'menus/get'
+        path = 'modal/permission/get'
+        param_fields = (
+            ('modal', fields.CharField(required=True, help_text=u"模型名称")),
+        )
 
 urlpatterns = site.urlpatterns
 

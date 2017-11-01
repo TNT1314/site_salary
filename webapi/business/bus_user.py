@@ -17,9 +17,9 @@ from django.contrib.auth import (
 
 from site_salary.common.apicode import ApiCode
 
-from website.models.menu_info import MenuInfo
 from website.models.company_user import CompanyUser
 from website.models.user_menu_rel import UserMenuRel
+from website.models.group_menu_rel import GroupMenuRel
 
 from webapi.serializers.ser_company_user import S_P_CompanyUser
 from webapi.serializers.ser_menus import S_U_Menus
@@ -97,7 +97,24 @@ def get_user_info(user):
     return code, mess, data
 
 
-def search_user_menus(user):
+def search_group_menus(user):
+    pass
+
+
+def search_group_user_menus(user):
+
+    user_menu_relates = UserMenuRel.objects.filter(valid=True, com_user=user, menu__parent__isnull=False)
+
+    user_menus = [relate.menu for relate in user_menu_relates]
+
+    group_menu_relates = GroupMenuRel.objects.filter(valid=True, group=user.group, menu__parent__isnull=False)
+
+    user_group_menus = [relate.menu for relate in group_menu_relates]
+
+    return set(user_menus + user_group_menus)
+
+
+def search_user_all_menus(user):
     """
         根据用户获取菜单权限
         :param user:
@@ -105,18 +122,16 @@ def search_user_menus(user):
     """
     menus = list()
 
-    m_user_menu_rels = UserMenuRel.objects.filter(com_user=user, menu__parent__isnull=False)
+    user_menus = search_group_user_menus(user)
 
-    menu_childs = [relate.menu for relate in m_user_menu_rels]
-
-    menu_parents = (relate.menu.parent for relate in m_user_menu_rels)
+    menu_parents = (menu.parent for menu in user_menus)
 
     for parent in menu_parents:
 
         d_parent = S_U_Menus(parent).data
         d_childs = list()
 
-        for child in menu_childs:
+        for child in user_menus:
 
             if child.parent.id == parent.id:
                 d_childs.append(S_U_Menus(child).data)
@@ -126,7 +141,6 @@ def search_user_menus(user):
         menus.append(d_parent)
 
     return menus
-
 
 
 def get_user_menus(user):
@@ -139,5 +153,40 @@ def get_user_menus(user):
     mess = ApiCode.success.mess
     data = dict()
     data['menus'] = list()
-    data['menus'] = search_user_menus(user)
+    data['menus'] = search_user_all_menus(user)
+    return code, mess, data
+
+
+def get_menus_permission(user, modal):
+    """
+        获取菜单权限
+        :param user:
+        :param modal:
+        :return:
+    """
+
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+    data = dict()
+    data['permission'] = dict()
+
+    if modal in ('help', 'grid'):
+        permission = OrderedDict()
+        permission['inf'] = True
+        permission['add'] = True
+        permission['cha'] = True
+        permission['aud'] = True
+        permission['del'] = True
+        data['permission'] = permission
+    else:
+        m_user_menu = UserMenuRel.objects.filter(valid=True, user=user, menu__modal=modal).first()
+        m_group_menu = GroupMenuRel.objects.filter(valid=True, group=user.group, menu__modal=modal).first()
+        permission = OrderedDict()
+        permission['inf'] = getattr(m_user_menu.menu, "p_inf", False) or getattr(m_group_menu.menu, "p_inf", False)
+        permission['add'] = getattr(m_user_menu.menu, "p_add", False) or getattr(m_group_menu.menu, "p_add", False)
+        permission['cha'] = getattr(m_user_menu.menu, "p_cha", False) or getattr(m_group_menu.menu, "p_cha", False)
+        permission['aud'] = getattr(m_user_menu.menu, "p_aud", False) or getattr(m_group_menu.menu, "p_aud", False)
+        permission['del'] = getattr(m_user_menu.menu, "p_del", False) or getattr(m_group_menu.menu, "p_del", False)
+        data['permission'] = permission
+
     return code, mess, data

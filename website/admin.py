@@ -14,7 +14,8 @@ admin.site.register(CompanyInfo)
 
 # 分组信息
 from website.models.group_info import GroupInfo
-admin.site.register(GroupInfo)
+from website.adminsite.site_group import SiteGroupInfo
+admin.site.register(GroupInfo, SiteGroupInfo)
 
 # 用户信息
 from website.models.company_user import CompanyUser

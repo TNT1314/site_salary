@@ -15,8 +15,14 @@ from mixrestview import ViewSite, fields
 
 from .api_base_view import CompanyUserApiView
 from site_salary.common.backformat import JsonResponse
+from site_salary.common.regular import (
+    valid_email, valid_mobile
+)
+from site_salary.common.define import (
+    LIST_EMPLOYEE_STATUS,LIST_EMPLOYEE_GENDER
+)
 from webapi.business.bus_employee import (
-    get_employees_pager
+    user_get_employees_pager, user_get_employee_by_id, user_add_employee
 )
 
 site = ViewSite(name="employee", app_name="webapi")
@@ -30,6 +36,7 @@ class EmployeeList(CompanyUserApiView):
 
     def get_context(self, request, *args, **kwargs):
 
+        user = request.user
         name = request.params.name
         phone = request.params.phone
         pagesize = request.params.pagesize
@@ -37,7 +44,7 @@ class EmployeeList(CompanyUserApiView):
         sortdatafield = request.params.sortdatafield
         sortorder = request.params.sortorder
 
-        code, mess, data = get_employees_pager(pagesize, pagenum, name, phone, sortdatafield, sortorder)
+        code, mess, data = user_get_employees_pager(user, pagesize, pagenum, name, phone, sortdatafield, sortorder)
 
         return JsonResponse(code, mess, data)
 
@@ -52,5 +59,56 @@ class EmployeeList(CompanyUserApiView):
             ('sortorder', fields.CharField(required=False, help_text=u"排序方式（asc:升序,des:降序）")),
         )
 
+@site
+class EmployeeGet(CompanyUserApiView):
+    """
+        企业员工列表
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        id = request.params.id
+        user = request.user
+
+        code, mess, data = user_get_employee_by_id(user,id)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'get'
+        param_fields = (
+            ('id', fields.IntegerField(required=True, help_text=u"唯一ID")),
+        )
+
+@site
+class EmployeeAdd(CompanyUserApiView):
+    """
+        添加企业员工
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        user = request.user
+        name = request.params.name
+        phone = request.params.phone
+        gender = request.params.gender
+        email = request.params.email
+        status = request.params.status
+        address = request.params.address
+
+        code, mess, data = user_add_employee(user, name, phone, gender, email, status, address)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'add'
+        param_fields = (
+            ('name', fields.CharField(required=True, help_text=u"新增员工的姓名")),
+            ('phone', fields.RegexField(required=True, regex=valid_mobile, help_text=u"新增员工的联系电话")),
+            ('gender', fields.ChoiceField(required=True, choices=LIST_EMPLOYEE_GENDER, help_text=u"新增员工的性别")),
+            ('email', fields.RegexField(required=False, regex=valid_email, help_text=u"新增员工的电子邮箱")),
+            ('status', fields.ChoiceField(required=True, choices=LIST_EMPLOYEE_STATUS, help_text=u"新增员工的状态")),
+            ('address', fields.ChoiceField(required=False, help_text=u"新增员工的家庭住址")),
+        )
 
 urlpatterns = site.urlpatterns

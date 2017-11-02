@@ -40,6 +40,7 @@ class EmployeeInfo(ModelsBase):
         db_table = 'employee_info'
         app_label = 'website'
         verbose_name = verbose_name_plural = "公司雇员信息"
+        unique_together = ("name", "phone", "company")
 
     def __unicode__(self):
         return u"{}({})".format(self.name, self.phone)

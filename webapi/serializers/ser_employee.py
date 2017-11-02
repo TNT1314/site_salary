@@ -11,7 +11,7 @@ from __future__ import unicode_literals
         企业用户序列化
 """
 
-__all__ = ["S_L_Employee"]
+__all__ = ["S_Employee", "S_L_Employee"]
 
 from rest_framework import serializers
 
@@ -19,6 +19,16 @@ from site_salary.common.define import (
     DICT_EMPLOYEE_GENDER,DICT_EMPLOYEE_STATUS
 )
 from website.models.employee_info import EmployeeInfo
+
+
+class S_Employee(serializers.ModelSerializer):
+    """
+        企业员工列表序列化
+    """
+
+    class Meta:
+        model = EmployeeInfo
+        fields = '__all__'
 
 
 class S_L_Employee(serializers.ModelSerializer):

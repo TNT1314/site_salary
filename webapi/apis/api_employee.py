@@ -22,7 +22,8 @@ from site_salary.common.define import (
     LIST_EMPLOYEE_STATUS,LIST_EMPLOYEE_GENDER
 )
 from webapi.business.bus_employee import (
-    user_get_employees_pager, user_get_employee_by_id, user_add_employee
+    user_get_employees_pager, user_get_employee_by_id,
+    user_add_employee, user_update_employee
 )
 
 site = ViewSite(name="employee", app_name="webapi")
@@ -81,7 +82,7 @@ class EmployeeGet(CompanyUserApiView):
         )
 
 @site
-class EmployeeAdd(CompanyUserApiView):
+class EmployeeChange(CompanyUserApiView):
     """
         添加企业员工
     """
@@ -96,19 +97,25 @@ class EmployeeAdd(CompanyUserApiView):
         status = request.params.status
         address = request.params.address
 
-        code, mess, data = user_add_employee(user, name, phone, gender, email, status, address)
+        id = request.params.id
+
+        if id:
+            code, mess, data = user_update_employee(user, id, name, phone, gender, email, status, address)
+        else:
+            code, mess, data = user_add_employee(user,name, phone, gender, email, status, address)
 
         return JsonResponse(code, mess, data)
 
     class Meta:
-        path = 'add'
+        path = 'change'
         param_fields = (
+            ('id', fields.CharField(required=False, help_text=u"修改某个员工的唯一标识")),
             ('name', fields.CharField(required=True, help_text=u"新增员工的姓名")),
             ('phone', fields.RegexField(required=True, regex=valid_mobile, help_text=u"新增员工的联系电话")),
             ('gender', fields.ChoiceField(required=True, choices=LIST_EMPLOYEE_GENDER, help_text=u"新增员工的性别")),
             ('email', fields.RegexField(required=False, regex=valid_email, help_text=u"新增员工的电子邮箱")),
             ('status', fields.ChoiceField(required=True, choices=LIST_EMPLOYEE_STATUS, help_text=u"新增员工的状态")),
-            ('address', fields.ChoiceField(required=False, help_text=u"新增员工的家庭住址")),
+            ('address', fields.CharField(required=False, help_text=u"新增员工的家庭住址")),
         )
 
 urlpatterns = site.urlpatterns

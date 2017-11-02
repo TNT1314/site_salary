@@ -184,11 +184,9 @@ def get_menus_permission(user, modal):
         m_user_menu = UserMenuRel.objects.filter(valid=True, com_user=user, menu__modal=modal).first()
         m_group_menu = GroupMenuRel.objects.filter(valid=True, group=user.group, menu__modal=modal).first()
 
-        r_user_menu = MenuInfo() if not m_user_menu else m_user_menu.menu
-        r_user_menu = MenuInfo() if not r_user_menu else r_user_menu
+        r_user_menu = UserMenuRel() if not m_user_menu else m_user_menu
 
-        r_group_menu = MenuInfo() if not m_group_menu else m_group_menu.menu
-        r_group_menu = MenuInfo() if not r_group_menu else r_group_menu
+        r_group_menu = GroupMenuRel() if not m_group_menu else m_group_menu
 
         permission['inf'] = getattr(r_user_menu, "p_inf", False) or getattr(r_group_menu, "p_inf", False)
         permission['add'] = getattr(r_user_menu, "p_add", False) or getattr(r_group_menu, "p_add", False)

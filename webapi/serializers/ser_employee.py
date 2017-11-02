@@ -38,6 +38,7 @@ class S_L_Employee(serializers.ModelSerializer):
 
     gender = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
     add_time = serializers.SerializerMethodField()
     cha_time = serializers.SerializerMethodField()
 
@@ -63,6 +64,19 @@ class S_L_Employee(serializers.ModelSerializer):
             :return:
         """
         return DICT_EMPLOYEE_STATUS[obj.status]
+
+    def get_phone(self, obj):
+        """
+            电话号码模糊
+            :param obj:
+            :return:
+        """
+        char_list = list()
+        if obj.phone:
+            char_list = [x for x in str(obj.phone)]
+            char_list[3:7] = '****'
+
+        return ''.join(char_list) if char_list else None
 
     def get_add_time(self, obj):
         """

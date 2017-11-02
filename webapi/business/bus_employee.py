@@ -42,9 +42,9 @@ def user_get_employees_pager(user, p_size, p_numb, name, phone, sortdatafield, s
 
         query['company'] = user.company
 
-        sortdatafield = sortdatafield if sortdatafield else "id"
+        sortdatafield = sortdatafield if sortdatafield else "add_time"
 
-        sortorder = sortorder if sortorder else "asc"
+        sortorder = sortorder if sortorder else "desc"
 
         start, end = get_paging_index(p_size, p_numb)
 
@@ -106,6 +106,39 @@ def user_add_employee(user, name, phone, gender, email, status, address):
         data['id'] = n_employee.id
         data['name'] = n_employee.name
     except IntegrityError:
-        code = ApiCode.addlineerror.code
+        code = ApiCode.edilineerror.code
         mess = u"请不要多次添加同一人！"
+    return code, mess, data
+
+
+def user_update_employee(user, id, name, phone, gender, email, status, address):
+    """
+        用户添加公司用户
+    """
+
+    data = dict()
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    q_employee = EmployeeInfo.objects.filter(company=user.company, id=id)
+
+    if q_employee.first():
+        try:
+            m_employee = q_employee.first()
+            m_employee.name = name
+            m_employee.phone = phone
+            m_employee.gender = gender
+            m_employee.email = email
+            m_employee.status = status
+            m_employee.address = address
+
+            m_employee.save()
+            data['id'] = m_employee.id
+            data['name'] = m_employee.name
+        except IntegrityError:
+            code = ApiCode.edilineerror.code
+            mess = u"请不要多次添加同一人！"
+    else:
+        code = ApiCode.linenoexists.code
+        mess = ApiCode.linenoexists.mess
     return code, mess, data

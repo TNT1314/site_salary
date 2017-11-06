@@ -70,19 +70,19 @@ DICT_UNIT_ALL = dict(LIST_UNIT_ALL)
 
 
 # 体积单位集合
-ENUM_DIAM_ALL = Enum(
+ENUM_BULK_ALL = Enum(
     M='m³',
     DM='dm³',
     CM='cm³',
     MM='mm³',
 )
-LIST_DIAM_ALL = (
-    (ENUM_DIAM_ALL.M, u'立方米'),
-    (ENUM_DIAM_ALL.DM, u'立方分米'),
-    (ENUM_DIAM_ALL.CM, u'立方厘米'),
-    (ENUM_DIAM_ALL.MM, u'立方毫米'),
+LIST_BULK_ALL = (
+    (ENUM_BULK_ALL.M, u'立方米'),
+    (ENUM_BULK_ALL.DM, u'立方分米'),
+    (ENUM_BULK_ALL.CM, u'立方厘米'),
+    (ENUM_BULK_ALL.MM, u'立方毫米'),
 )
-DICT_DIAM_ALL = dict(LIST_DIAM_ALL)
+DICT_BULK_ALL = dict(LIST_BULK_ALL)
 
 
 # 重量单位集合

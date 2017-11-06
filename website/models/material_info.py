@@ -18,7 +18,7 @@ from .base_model import ModelsBase
 from site_salary.common.untils import chinese2pinyin
 from site_salary.common.define import (
     ENUM_UNIT_ALL, LIST_UNIT_ALL,
-    ENUM_DIAM_ALL, LIST_DIAM_ALL,
+    ENUM_BULK_ALL, LIST_BULK_ALL,
     ENUM_WEIGHT_ALL, LIST_WEIGHT_ALL,
 )
 
@@ -45,7 +45,7 @@ class MaterialInfo(ModelsBase):
     diam_unit = models.CharField('直径单位', max_length=10, null=True, blank=True, choices=LIST_UNIT_ALL, default=ENUM_UNIT_ALL.M,
                                  help_text="物料的高度单位")
     bulk = models.IntegerField('物料体积', null=True, blank=True, help_text="单一物料体积")
-    bulk_unit = models.CharField('体积单位', max_length=10, null=True, blank=True, choices=LIST_DIAM_ALL, default=ENUM_DIAM_ALL.M,
+    bulk_unit = models.CharField('体积单位', max_length=10, null=True, blank=True, choices=LIST_BULK_ALL, default=ENUM_BULK_ALL.M,
                                  help_text="物料的高度单位")
     weight = models.IntegerField('物料重量', null=True, blank=True, help_text="单一物料重量")
     weight_unit = models.CharField('重量单位', max_length=10, null=True, blank=True, choices=LIST_WEIGHT_ALL, default=ENUM_WEIGHT_ALL.KG,

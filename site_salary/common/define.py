@@ -47,3 +47,55 @@ LIST_EMPLOYEE_STATUS = (
     (ENUM_EMPLOYEE_STATUS.STLINE, u'停薪留职'),
 )
 DICT_EMPLOYEE_STATUS = dict(LIST_EMPLOYEE_STATUS)
+
+
+# 默认单位集合
+ENUM_UNIT_ALL = Enum(
+    KM='km',
+    M='m',
+    DM='dm',
+    CM='cm',
+    MM='mm',
+    UM='um',
+)
+LIST_UNIT_ALL = (
+    (ENUM_UNIT_ALL.KM, u'千米'),
+    (ENUM_UNIT_ALL.M, u'米'),
+    (ENUM_UNIT_ALL.DM, u'分米'),
+    (ENUM_UNIT_ALL.CM, u'厘米'),
+    (ENUM_UNIT_ALL.MM, u'毫米'),
+    (ENUM_UNIT_ALL.UM, u'微米'),
+)
+DICT_UNIT_ALL = dict(LIST_UNIT_ALL)
+
+
+# 体积单位集合
+ENUM_DIAM_ALL = Enum(
+    M='m³',
+    DM='dm³',
+    CM='cm³',
+    MM='mm³',
+)
+LIST_DIAM_ALL = (
+    (ENUM_DIAM_ALL.M, u'立方米'),
+    (ENUM_DIAM_ALL.DM, u'立方分米'),
+    (ENUM_DIAM_ALL.CM, u'立方厘米'),
+    (ENUM_DIAM_ALL.MM, u'立方毫米'),
+)
+DICT_DIAM_ALL = dict(LIST_DIAM_ALL)
+
+
+# 重量单位集合
+ENUM_WEIGHT_ALL = Enum(
+    KG='kg',
+    G='g',
+    MG='mg',
+    UG='ug',
+)
+LIST_WEIGHT_ALL = (
+    (ENUM_WEIGHT_ALL.KG, u'千克'),
+    (ENUM_WEIGHT_ALL.G, u'克'),
+    (ENUM_WEIGHT_ALL.MG, u'毫克'),
+    (ENUM_WEIGHT_ALL.UG, u'微克'),
+)
+DICT_WEIGHT_ALL = dict(LIST_WEIGHT_ALL)

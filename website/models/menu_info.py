@@ -8,7 +8,7 @@ from __future__ import unicode_literals
     @author: wormer(wormer@wormer.cn)
     @date: 17/10/30 21:53
     @description:
-        菜单
+        菜单信息表
     
 """
 

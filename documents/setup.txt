@@ -1,4 +1,4 @@
-/**
+/** q   op[]
     auth: wormer@wormer.cn
     proj: site_salary
     date: 2017-10-12
@@ -17,3 +17,4 @@
     pip install django-extensions
     pip install mixrestview
     pip install Pillow
+    pip install pypinyin

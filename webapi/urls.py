@@ -20,6 +20,9 @@ urlpatterns = [
     # 企业员工接口类
     url(r'^employee/', include('webapi.apis.api_employee')),
 
+    # 企业物料接口类
+    url(r'^material/', include('webapi.apis.api_material')),
+
     # 测试接口
     url(r'^test/one/', include('webapi.apis.rest_view_test')),
 

@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 """
 
 import socket
-from datetime import datetime
+from pypinyin import lazy_pinyin
 
 from .define import ENUM_IMAGE_PATH
 from .md5hash import Md5Hash
@@ -65,4 +65,24 @@ def get_local_ip():
     except Exception:
         pass
     return host_ip
+
+
+def chinese2pinyin(cchar):
+    """
+        汉字转拼音,不考虑多音字
+        :param value:
+        :return:
+    """
+    ex_change = str()
+    result_list = list()
+    if cchar:
+        cha_value = lazy_pinyin(cchar)
+        for one_cha in cha_value:
+            if one_cha.isalpha():
+                result_list.append(one_cha[0])
+            if one_cha.isdigit():
+                result_list.append(one_cha)
+        ex_change = ''.join(result_list)
+    return ex_change
+
  

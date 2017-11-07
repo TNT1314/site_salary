@@ -179,7 +179,7 @@ def user_update_process_price(
 
             m_price.price = price
             m_price.unit = unit
-            m_price.save(update_fields=['price'])
+            m_price.save(update_fields=['price', 'unit'])
 
             data['id'] = m_model.id
             data['name'] = m_model.name

@@ -42,3 +42,7 @@ from website.models.material_info import MaterialInfo
 admin.site.register(MaterialInfo)
 
 
+# 公司物料加工定价信息
+from website.models.process_price import ProcessPrice
+admin.site.register(ProcessPrice)
+

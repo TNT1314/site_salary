@@ -57,3 +57,13 @@ class S_L_MaterialInfo(serializers.ModelSerializer):
             :return:
         """
         return obj.cha_time.strftime("%Y-%m-%d %H:%M:%S") if obj.cha_time else ""
+
+
+class S_Price_MaterialInfo(serializers.ModelSerializer):
+    """
+        企业物料列表序列化
+    """
+
+    class Meta:
+        model = MaterialInfo
+        exclude = ('id', 'add_time', 'cha_time')

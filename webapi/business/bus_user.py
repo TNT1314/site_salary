@@ -125,7 +125,9 @@ def search_user_all_menus(user):
 
     user_menus = search_group_user_menus(user)
 
-    menu_parents = (menu.parent for menu in user_menus)
+    menu_parents = [menu.parent for menu in user_menus]
+
+    menu_parents = set(menu_parents)
 
     for parent in menu_parents:
 

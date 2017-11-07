@@ -23,6 +23,9 @@ urlpatterns = [
     # 企业物料接口类
     url(r'^material/', include('webapi.apis.api_material')),
 
+    # 企业物料定价接口类
+    url(r'^process/price/', include('webapi.apis.api_process_price')),
+
     # 测试接口
     url(r'^test/one/', include('webapi.apis.rest_view_test')),
 

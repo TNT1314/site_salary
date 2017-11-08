@@ -16,7 +16,9 @@ from django.db.utils import IntegrityError
 from site_salary.common.apicode import ApiCode
 from site_salary.common.untils import get_paging_index
 from website.models.quarter_salary import QuarterSalary
-from webapi.serializers.set_quarter_salary import S_L_QuarterSalary
+from webapi.serializers.set_quarter_salary import (
+    S_L_QuarterSalary, S_I_QuarterSalary
+)
 
 
 def user_get_quarter_salary_pager(user, p_size, p_numb, sortdatafield, sortorder, year, quarter, name):
@@ -77,11 +79,7 @@ def user_get_quarter_salary(user, id):
     code = ApiCode.success.code
     mess = ApiCode.success.mess
     q_sets = QuarterSalary.objects.filter(company=user.company, id=id)
-
     q_object = q_sets.first()
-    q_material = q_object.material
-    s_serial = S_ProcessPrice(q_object) if q_object else None
-
+    s_serial = S_I_QuarterSalary(q_object) if q_object else None
     data = s_serial.data if s_serial else None
-    del data['material']
     return code, mess, data

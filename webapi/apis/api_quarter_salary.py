@@ -18,7 +18,7 @@ from site_salary.common.define import (
     LIST_QUARTER_ALL
 )
 from webapi.business.bus_quarter_salary import (
-    user_get_quarter_salary_pager
+    user_get_quarter_salary_pager, user_get_quarter_salary
 )
 from webapi.business.bus_process_price import (
     user_get_process_price_pager, user_get_process_price,
@@ -79,14 +79,14 @@ class QuarterSalaryGet(CompanyUserApiView):
         user = request.user
         id = request.params.id
 
-        code, mess, data = user_get_process_price(user, id)
+        code, mess, data = user_get_quarter_salary(user, id)
 
         return JsonResponse(code, mess, data)
 
     class Meta:
         path = 'get'
         param_fields = (
-            ('id', fields.IntegerField(required=True, help_text=u"物料定价唯一ID")),
+            ('id', fields.IntegerField(required=True, help_text=u"季度工资唯一ID")),
         )
 
 

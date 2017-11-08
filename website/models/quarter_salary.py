@@ -50,7 +50,7 @@ class QuarterSalaryItem(ModelsBase):
         季度工资明细
     """
 
-    parent = models.ForeignKey('QuarterSalary', null=False, blank=False, db_constraint=False, verbose_name='工资主表', on_delete=models.DO_NOTHING, db_index=True, help_text='工资主表')
+    parent = models.ForeignKey('QuarterSalary', null=False, blank=False, db_constraint=False, verbose_name='工资主表', related_name='items', on_delete=models.DO_NOTHING, db_index=True, help_text='工资主表')
     material = models.ForeignKey('MaterialInfo', null=False, blank=False, db_constraint=False, verbose_name='工件', on_delete=models.DO_NOTHING, db_index=True, help_text='加工工件')
     mat_name = models.CharField("工件名称", null=False, blank=False, max_length=4, db_index=True, help_text="工件名称")
     mat_standards = models.CharField('工件规格', max_length=100, null=True, blank=True, help_text="物料规格，从长宽高等汇总")

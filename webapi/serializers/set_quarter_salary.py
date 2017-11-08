@@ -14,7 +14,7 @@ from rest_framework import serializers
 from site_salary.common.define import (
     DICT_STATUS_ALL, DICT_QUARTER_ALL
 )
-from website.models.quarter_salary import QuarterSalary
+from website.models.quarter_salary import QuarterSalary, QuarterSalaryItem
 
 
 class S_QuarterSalary(serializers.ModelSerializer):
@@ -88,6 +88,18 @@ class S_L_QuarterSalary(serializers.ModelSerializer):
         return obj.cha_time.strftime("%Y-%m-%d %H:%M:%S") if obj.cha_time else ""
 
 
+class S_I_QuarterSalaryItem(serializers.ModelSerializer):
+    """
+        季度工资明细表序列化
+    """
+    class Meta:
+        model = QuarterSalaryItem
+        fields = [
+            "id", "material", "mat_name", "mat_standards", "mat_price",
+            "mat_count", "mat_unit", "mat_total", "remarks",
+        ]
+
+
 class S_I_QuarterSalary(serializers.ModelSerializer):
     """
         季度工资明细表
@@ -95,8 +107,7 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
     """
 
     employee = serializers.SerializerMethodField()
-    quarter = serializers.SerializerMethodField()
-    status = serializers.SerializerMethodField()
+    items = S_I_QuarterSalaryItem(many=True, read_only=True)
     add_time = serializers.SerializerMethodField()
     cha_time = serializers.SerializerMethodField()
 
@@ -104,8 +115,8 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
         model = QuarterSalary
         fields = [
             "id", "year", "quarter", "employee",
-            "count", "salary", "status", "add_time",
-            "cha_time"
+            "count", "salary", "status", "items",
+            "add_time", "cha_time"
         ]
 
     def get_employee(self, obj):
@@ -114,23 +125,11 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
             :param obj:
             :return:
         """
-        return obj.employee.name if obj.employee else None
 
-    def get_quarter(self, obj):
-        """
-
-            :param obj:
-            :return:
-        """
-        return DICT_QUARTER_ALL[obj.quarter] if obj.quarter else None
-
-    def get_status(self, obj):
-        """
-            展示当前状态
-            :param obj:
-            :return:
-        """
-        return DICT_STATUS_ALL[obj.status] if obj.status else None
+        employee = dict()
+        employee['id'] = obj.employee.id
+        employee['name'] = obj.employee.name
+        return employee
 
     def get_add_time(self, obj):
         """

@@ -46,3 +46,11 @@ admin.site.register(MaterialInfo)
 from website.models.process_price import ProcessPrice
 admin.site.register(ProcessPrice)
 
+# 公司季度工资表
+from website.models.quarter_salary import QuarterSalary
+admin.site.register(QuarterSalary)
+
+# 公司季度工资表
+from website.models.quarter_salary import QuarterSalaryItem
+admin.site.register(QuarterSalaryItem)
+

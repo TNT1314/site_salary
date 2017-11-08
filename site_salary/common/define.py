@@ -99,3 +99,32 @@ LIST_WEIGHT_ALL = (
     (ENUM_WEIGHT_ALL.UG, u'微克'),
 )
 DICT_WEIGHT_ALL = dict(LIST_WEIGHT_ALL)
+
+
+# 季度选项
+ENUM_QUARTER_ALL = Enum(
+    ONE=1,
+    TWO=2,
+    THR=3,
+    FOU=4
+)
+LIST_QUARTER_ALL = (
+    (ENUM_QUARTER_ALL.ONE, u'一季度'),
+    (ENUM_QUARTER_ALL.TWO, u'二季度'),
+    (ENUM_QUARTER_ALL.THR, u'三季度'),
+    (ENUM_QUARTER_ALL.FOU, u'四季度'),
+)
+DICT_QUARTER_ALL = dict(LIST_QUARTER_ALL)
+
+
+# 单据状态选项
+ENUM_STATUS_ALL = Enum(
+    NEW=1,
+    AUD=2,
+)
+LIST_STATUS_ALL = (
+    (ENUM_STATUS_ALL.NEW, u'新增'),
+    (ENUM_STATUS_ALL.AUD, u'已审核'),
+
+)
+DICT_STATUS_ALL = dict(LIST_STATUS_ALL)

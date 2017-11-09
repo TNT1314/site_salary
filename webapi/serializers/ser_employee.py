@@ -30,6 +30,16 @@ class S_Employee(serializers.ModelSerializer):
         model = EmployeeInfo
         fields = '__all__'
 
+class S_CN_Employee(serializers.ModelSerializer):
+    """
+        企业员工列表序列化
+    """
+
+    class Meta:
+        model = EmployeeInfo
+        fields = [
+            "id", "name"
+        ]
 
 class S_L_Employee(serializers.ModelSerializer):
     """

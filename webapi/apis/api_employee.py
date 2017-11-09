@@ -23,7 +23,8 @@ from site_salary.common.define import (
 )
 from webapi.business.bus_employee import (
     user_get_employees_pager, user_get_employee_by_id,
-    user_add_employee, user_update_employee
+    user_add_employee, user_update_employee,
+    user_get_employee_by_term,
 )
 
 site = ViewSite(name="employee", app_name="webapi")
@@ -116,6 +117,28 @@ class EmployeeChange(CompanyUserApiView):
             ('email', fields.RegexField(required=False, regex=valid_email, help_text=u"新增员工的电子邮箱")),
             ('status', fields.ChoiceField(required=True, choices=LIST_EMPLOYEE_STATUS, help_text=u"新增员工的状态")),
             ('address', fields.CharField(required=False, help_text=u"新增员工的家庭住址")),
+        )
+
+
+@site
+class EmployeeTermGet(CompanyUserApiView):
+    """
+        根据名字模糊查询员工
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        user = request.user
+        term = request.params.term
+
+        code, mess, data = user_get_employee_by_term(user, term)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'term/get'
+        param_fields = (
+            ('term', fields.CharField(required=True, help_text=u"模糊查询条件")),
         )
 
 urlpatterns = site.urlpatterns

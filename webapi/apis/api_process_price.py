@@ -19,7 +19,8 @@ from site_salary.common.define import (
 )
 from webapi.business.bus_process_price import (
     user_get_process_price_pager, user_get_process_price,
-    user_add_process_price, user_update_process_price
+    user_add_process_price, user_update_process_price,
+    user_get_process_price_simple
 )
 
 
@@ -151,5 +152,25 @@ class ProcessPriceChange(CompanyUserApiView):
             ('weight_unit', fields.ChoiceField(required=True, choices=LIST_WEIGHT_ALL, help_text=u"重量单位")),
         )
 
+@site
+class ProcessPriceGetByID(CompanyUserApiView):
+    """
+        获取物料定价详细信息接口
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        user = request.user
+        name = request.params.name
+
+        code, mess, data = user_get_process_price_simple(user, name)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'select/get'
+        param_fields = (
+            ('name', fields.CharField(required=False, help_text=u"物料定价唯一ID")),
+        )
 
 urlpatterns = site.urlpatterns

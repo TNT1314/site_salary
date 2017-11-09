@@ -16,7 +16,7 @@ from site_salary.common.apicode import ApiCode
 from site_salary.common.untils import get_paging_index
 from website.models.employee_info import EmployeeInfo
 from webapi.serializers.ser_employee import (
-    S_Employee, S_L_Employee
+    S_Employee, S_L_Employee, S_CN_Employee
 )
 
 
@@ -142,3 +142,22 @@ def user_update_employee(user, id, name, phone, gender, email, status, address):
         code = ApiCode.linenoexists.code
         mess = ApiCode.linenoexists.mess
     return code, mess, data
+
+
+def user_get_employee_by_term(user, term):
+    """
+        根据条件模糊查询人员信息
+    """
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    query = dict()
+    query['name__contains'] = term
+    query['company'] = user.company
+
+    m_employee = EmployeeInfo.objects.filter(**query)
+
+    s_employee = S_CN_Employee(m_employee, many=True)
+    results = s_employee.data if s_employee else list()
+
+    return code, mess, results

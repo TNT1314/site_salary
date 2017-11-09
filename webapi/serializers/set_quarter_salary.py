@@ -107,6 +107,7 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
     """
 
     employee = serializers.SerializerMethodField()
+    salary = serializers.SerializerMethodField()
     items = S_I_QuarterSalaryItem(many=True, read_only=True)
     add_time = serializers.SerializerMethodField()
     cha_time = serializers.SerializerMethodField()
@@ -115,7 +116,7 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
         model = QuarterSalary
         fields = [
             "id", "year", "quarter", "employee",
-            "count", "salary", "status", "items",
+            "count", "salary", "status", "items", "remarks",
             "add_time", "cha_time"
         ]
 
@@ -130,6 +131,14 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
         employee['id'] = obj.employee.id
         employee['name'] = obj.employee.name
         return employee
+
+    def get_salary(self, obj):
+        """
+
+        :param obj:
+        :return:
+        """
+        return '{:.2f}'.format(obj.salary)
 
     def get_add_time(self, obj):
         """

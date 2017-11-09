@@ -52,8 +52,8 @@ class QuarterSalaryItem(ModelsBase):
 
     parent = models.ForeignKey('QuarterSalary', null=False, blank=False, db_constraint=False, verbose_name='工资主表', related_name='items', on_delete=models.DO_NOTHING, db_index=True, help_text='工资主表')
     material = models.ForeignKey('MaterialInfo', null=False, blank=False, db_constraint=False, verbose_name='工件', on_delete=models.DO_NOTHING, db_index=True, help_text='加工工件')
-    mat_name = models.CharField("工件名称", null=False, blank=False, max_length=4, db_index=True, help_text="工件名称")
-    mat_standards = models.CharField('工件规格', max_length=100, null=True, blank=True, help_text="物料规格，从长宽高等汇总")
+    mat_name = models.CharField("工件名称", null=False, blank=False, max_length=100, db_index=True, help_text="工件名称")
+    mat_standards = models.CharField('工件规格', max_length=500, null=True, blank=True, help_text="物料规格，从长宽高等汇总")
     mat_price = models.DecimalField("加工价格", null=False, blank=False, max_digits=16, decimal_places=4, default=0.00, help_text='加工该物料的价格')
     mat_count = models.IntegerField("计件数量", null=False, blank=False, default=0, help_text='加工该物料的价格')
     mat_unit = models.CharField("计件单位", max_length=100, null=False, blank=False, default="件", help_text='计件单位')

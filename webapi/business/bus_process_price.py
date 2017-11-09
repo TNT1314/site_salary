@@ -190,3 +190,30 @@ def user_update_process_price(
         code = ApiCode.linenoexists.code
         mess = ApiCode.linenoexists.mess
     return code, mess, data
+
+
+def user_get_process_price_simple(user, name):
+    """
+        用户根据ID获取物料定价信息
+        :param user:
+        :param id:
+        :return:
+    """
+
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    query = dict()
+
+    if name:
+        query['material__name__contains'] = name
+
+    query['material__company'] = user.company
+
+    q_sets = ProcessPrice.objects.filter(**query)
+
+    s_serial = S_L_ProcessPrice(q_sets, many=True) if q_sets else None
+
+    data = s_serial.data if s_serial else None
+
+    return code, mess, data

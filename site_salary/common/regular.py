@@ -135,5 +135,8 @@ valid_social = RegexValidatorPlus(
 
 valid_char = RegexValidatorPlus(re.compile('^[a-zA-Z]+$'), '字符串格式不正确！')
 
+# 验证年份
+valid_year = RegexValidatorPlus(re.compile('^[2-3]+\d{3}$'), '请填写正确的年份 ！')
+
 
  

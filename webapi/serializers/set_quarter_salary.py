@@ -36,6 +36,7 @@ class S_L_QuarterSalary(serializers.ModelSerializer):
     employee = serializers.SerializerMethodField()
     quarter = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
+    status_code = serializers.SerializerMethodField()
     add_time = serializers.SerializerMethodField()
     cha_time = serializers.SerializerMethodField()
 
@@ -43,8 +44,8 @@ class S_L_QuarterSalary(serializers.ModelSerializer):
         model = QuarterSalary
         fields = [
             "id", "year", "quarter", "employee",
-            "count", "salary", "status", "add_time",
-            "cha_time"
+            "count", "salary", "status", "status_code",
+            "add_time", "cha_time"
         ]
 
     def get_employee(self, obj):
@@ -70,6 +71,14 @@ class S_L_QuarterSalary(serializers.ModelSerializer):
             :return:
         """
         return DICT_STATUS_ALL[obj.status] if obj.status else None
+
+    def get_status_code(self, obj):
+        """
+            展示当前状态
+            :param obj:
+            :return:
+        """
+        return obj.status
 
     def get_add_time(self, obj):
         """

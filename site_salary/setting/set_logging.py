@@ -57,8 +57,8 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['logfile', 'mail_admins'],
-            'level': 'INFO',
+            'handlers': ['logfile'],
+            'level': 'DEBUG',
             'propagate': True
         },
         'django.request': {
@@ -71,5 +71,10 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True
         },
+        'exception': {
+            'handlers': ['logfile', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': True
+        }
     }
 }

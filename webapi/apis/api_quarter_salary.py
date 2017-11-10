@@ -20,7 +20,7 @@ from site_salary.common.define import (
 )
 from webapi.business.bus_quarter_salary import (
     user_get_quarter_salary_pager, user_get_quarter_salary,
-    user_add_quarter_salary,
+    user_add_quarter_salary, user_update_quarter_salary
 )
 
 
@@ -108,7 +108,10 @@ class QuarterSalaryChange(CompanyUserApiView):
             code, mess, data = user_add_quarter_salary(
                 user, year, employee, quarter, remarks, items
             )
-
+        else:
+            code, mess, data = user_update_quarter_salary(
+                user, id, year, employee, quarter, remarks, items
+            )
         return JsonResponse(code, mess, data)
 
     class Meta:

@@ -18,3 +18,11 @@
     pip install mixrestview
     pip install Pillow
     pip install pypinyin
+
+
+
+2.打印控件
+pip install reportlab
+pip install rptlab-preppy
+pip install rptlab-pyrxp
+pip install trml2pdf

@@ -16,9 +16,11 @@ import logging
 
 from functools import wraps
 
+from django.core.cache import cache
 from rest_framework.response import Response
 from django.contrib.auth.models import AnonymousUser
 
+from site_salary.common.backformat import JsonResponse
 from site_salary.common.apicode import ApiCode
 from site_salary.common.backformat import MessResponse
 from website.models.company_user import CompanyUser
@@ -58,3 +60,20 @@ def NeedCompanyUser(view, mark=''):
                 return res_view
     return wrap
  
+
+def NeverResubmit(view):
+    @wraps(view)
+    def wrap(*args, **kwargs):
+        request = args[0]
+        key = 'view_never_submit_{}_{}.{}'.format(request.user.id, view.__module__, view.__name__)
+        with cache.lock(key):
+            if cache.get(key):
+                logger.info("u={} f={}".format(request.user, view.__name__))
+                response_context = JsonResponse(ApiCode.submitsecond.code, ApiCode.submitsecond.mess, {})
+                return Response(response_context)
+            cache.set(key, True, 15)
+        ret = view(*args, **kwargs)
+        cache.delete(key)
+        return ret
+    return wrap
+

@@ -10,14 +10,6 @@ from __future__ import unicode_literals
         site_salary
 """
 
-__all__ = [
-    'SERVER_IP_FILE', 'SERVER_IP', 'EMAIL_SUBJECT_PREFIX',
-    'EMAIL_BACKEND', 'EMAIL_USE_TLS', 'EMAIL_HOST',
-    'EMAIL_PORT', 'EMAIL_HOST_USER', 'EMAIL_HOST_PASSWORD',
-    'DEFAULT_FROM_EMAIL', 'SEND_BROKEN_LINK_EMAILS',
-    'SERVER_EMAIL', 'MANAGERS'
-]
-
 import os
 import tempfile
 
@@ -47,7 +39,7 @@ else:
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = False
-EMAIL_HOST = "smtp.wormer.com"
+EMAIL_HOST = "smtp.wormer.cn"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "master@wormer.cn"
 EMAIL_HOST_PASSWORD = "ASDasd!@#123"

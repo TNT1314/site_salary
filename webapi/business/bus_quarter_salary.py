@@ -13,13 +13,14 @@ from __future__ import unicode_literals
 import json
 
 from decimal import Decimal
-from decimal import getcontext
 
 from django.db import transaction
 from django.db.utils import IntegrityError
 
 from site_salary.common.apicode import ApiCode
 from site_salary.common.untils import get_paging_index
+from site_salary.common.define import ENUM_STATUS_ALL
+
 from website.models.employee_info import EmployeeInfo
 from website.models.process_price import ProcessPrice
 from website.models.quarter_salary import QuarterSalary, QuarterSalaryItem
@@ -114,8 +115,6 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
     if has_employee:
         process_prices = json.loads(items)
 
-        getcontext().prec = 2
-
         quarter_salary_count = 0
         quarter_salary_total = Decimal(0.00)
 
@@ -130,11 +129,11 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
             quarter_salary_item.mat_standards = m_process_price.material.standards
             quarter_salary_item.mat_unit = m_process_price.unit
             quarter_salary_item.mat_count = int(process_price['mat_count'])
-            quarter_salary_item.mat_price = Decimal(process_price['mat_price'])
-            quarter_salary_item.mat_total = Decimal(process_price['mat_price']) * Decimal(process_price['mat_count'])
+            quarter_salary_item.mat_price = Decimal(str(process_price['mat_price']))
+            quarter_salary_item.mat_total = Decimal(str(process_price['mat_price'])) * Decimal(str(process_price['mat_count']))
             quarter_salary_item.remarks = process_price['remarks']
 
-            quarter_salary_count += process_price['mat_count']
+            quarter_salary_count += int(process_price['mat_count'])
             quarter_salary_total += quarter_salary_item.mat_total
 
             quarter_salary_items.append(quarter_salary_item)
@@ -146,6 +145,7 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
         m_quarter_salary.quarter = quarter
         m_quarter_salary.count = quarter_salary_count
         m_quarter_salary.salary = quarter_salary_total
+        m_quarter_salary.remarks = remarks
 
         try:
             with transaction.atomic():
@@ -163,4 +163,88 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
         code = ApiCode.linenoexists.code
         mess = ApiCode.linenoexists.mess
 
+    return code, mess, data
+
+
+def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items):
+    """
+        修改企业员工季度工资记录
+        :param user:
+        :param year:
+        :param employee:
+        :param quarter:
+        :param remarks:
+        :param items:
+        :return:
+    """
+
+    data = dict()
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    q_quater = QuarterSalary.objects.filter(company=user.company, id=id)
+
+    if q_quater.first():
+        has_employee = EmployeeInfo.objects.filter(company=user.company, id=employee).exists()
+
+        if has_employee:
+            process_prices = json.loads(items)
+            quarter_salary_count = 0
+            quarter_salary_total = Decimal(0.00)
+
+            quarter_salary_items = list()
+
+            for process_price in process_prices:
+                m_process_price = ProcessPrice.objects.get(pk=process_price['material'])
+
+                quarter_salary_item = QuarterSalaryItem()
+                quarter_salary_item.material = m_process_price.material
+                quarter_salary_item.mat_name = m_process_price.material.name
+                quarter_salary_item.mat_standards = m_process_price.material.standards
+                quarter_salary_item.mat_unit = m_process_price.unit
+                quarter_salary_item.mat_count = int(process_price['mat_count'])
+                quarter_salary_item.mat_price = Decimal(str(process_price['mat_price']))
+                quarter_salary_item.mat_total = Decimal(str(process_price['mat_price'])) * Decimal(str(process_price['mat_count']))
+                quarter_salary_item.remarks = process_price['remarks']
+
+                quarter_salary_count += int(process_price['mat_count'])
+                quarter_salary_total += quarter_salary_item.mat_total
+
+                quarter_salary_items.append(quarter_salary_item)
+
+            m_quarter_salary = q_quater.first()
+
+            if m_quarter_salary.status == ENUM_STATUS_ALL.NEW:
+                m_quarter_salary.year = year
+                m_quarter_salary.employee_id = employee
+                m_quarter_salary.quarter = quarter
+                m_quarter_salary.count = quarter_salary_count
+                m_quarter_salary.salary = quarter_salary_total
+                m_quarter_salary.remarks = remarks
+
+                try:
+                    with transaction.atomic():
+                        old_items = QuarterSalaryItem.objects.filter(parent=m_quarter_salary.id)
+                        for old_item in old_items:
+                            old_item.delete()
+
+                        m_quarter_salary.save()
+                        for item in quarter_salary_items:
+                            item.parent = m_quarter_salary
+                            item.save()
+
+                    data['id'] = m_quarter_salary.id
+                    data['name'] = m_quarter_salary.employee.name
+                except IntegrityError:
+                    code = ApiCode.edilineerror.code
+                    mess = "请勿为通一个人添加相同季度的工资记录！"
+            else:
+                code = ApiCode.edilineerror.code
+                mess = "已经审核的季度薪资不允许更改！"
+        else:
+            code = ApiCode.linenoexists.code
+            mess = u"人员记录不存在，请核实！"
+    else:
+        code = ApiCode.linenoexists.code
+        mess = u"季度薪资记录不存在，请核实！ "
     return code, mess, data

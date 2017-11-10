@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<!DOCTYPE document SYSTEM "rml.dtd">
+<document filename="financial_products.pdf" compression='1'>
+    {{script}}#coding=utf-8{{endscript}}
+    {{script}}import locale;locale.setlocale(locale.LC_ALL, '');{{endscript}}
+    <docinit>
+        <color id="BLUE" CMYK="[1,0.67,0,0.23]"/>
+    </docinit>
+    <template pageSize="(595, 842)" leftMargin="72" rightMargin="72" >
+        <template pageSize="(595, 842)" leftMargin="72" rightMargin="72" >
+        <pageTemplate id="head" pageSize="a4 portrait">
+            <pageGraphics>
+                <setFont name="song" size="11"/>
+                <image file="{{STATIC_DIR}}/static/img/logo.jpg" x="39" y="766" width="15" height="15"/>
+                <drawString x="56" y="770">建设者家园网络科技（北京）有限公司 提供技术支持</drawString>
+                <fill color="black"/>
+                <setFont name="song" size="10"/>
+                <lineMode width="1"/>
+                    <lines>34 765 561 765 </lines>
+                <fill color="#ADD8E6"/>
+                <lineMode width="1" />
+                    <lines>34 60 561 60</lines>
+                <fill color="#778899"/>
+                <setFont name="song" size="10"/>
+                <drawString x="270" y="40">第<pageNumber countingFrom="1"/>页</drawString>
+            </pageGraphics>
+            <frame id="second" x1="35" y1="85" width="525" height="680"/>
+        </pageTemplate>
+    </template>
+    </template>
+
+    <stylesheet>
+        <initialize>
+            <alias id="style.normal" value="style.Normal"/>
+        </initialize>
+        <paraStyle name="common"  fontName="song" fontSize="12" leading="18" spaceBefore="6" spaceAfter="12" firstLineIndent="0.5in" />
+        <paraStyle name="title" fontName="song" alignment="center" fontSize="30" leading="6" spaceBefore="6" spaceAfter="50" />
+        <paraStyle name="noIndent" fontName="song" alignment="left" fontSize="14" leading="15" spaceBefore="6" spaceAfter="8" />
+        <paraStyle name="alignLeft" fontName="song" alignment="left" fontSize="12" leading="15" spaceBefore="6" spaceAfter="8" firstLineIndent="0.2in" />
+        <paraStyle name="alignRight" fontName="song" alignment="right"  fontSize="14" leading="15" spaceBefore="6" spaceAfter="12" firstLineIndent="0.5in" />
+        <paraStyle name="alignCenter" fontName="song" alignment="center" fontSize="12" leading="12" spaceBefore="12" spaceAfter="12" />
+        <paraStyle name="paddingLeft" fontName="song" alignment="left"  fontSize="12" leading="15" spaceBefore="6" spaceAfter="8" firstLineIndent="250" />
+        <paraStyle name="table_title" fontName="song" alignment="center" fontSize="14" leading="14" spaceBefore="14" spaceAfter="14" />
+        <paraStyle name="table_group" fontName="song" alignment="center" fontSize="10" leading="12" spaceBefore="10" spaceAfter="10" />
+        <paraStyle name="table_content_title" fontName="song" alignment="left" fontSize="10" leading="12" spaceBefore="2" spaceAfter="10" />
+        <paraStyle name="table_content" fontName="song" alignment="left" fontSize="10" leading="10" spaceBefore="10" spaceAfter="10" />
+        <paraStyle name="table_content_left" fontName="song" leftIndent = "1in"/>
+        <blockTableStyle id="checked_main">
+            <blockFont name="song"/>
+            <blockTextColor colorName="black"/>
+            <blockValign value="BOTTOM" />
+            <blockAlignment value="LEFT"/>
+            <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="1,0" stop="-1,0"/>
+            <blockSpan start="0,0" stop="0,-1"/>
+        </blockTableStyle>
+        <blockTableStyle id="checked_person">
+            <blockFont name="song"/>
+            <blockTextColor colorName="black"/>
+            <blockValign value="BOTTOM" />
+            <blockAlignment value="LEFT"/>
+            <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="1,0" stop="1,0"/>
+            <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="3,0" stop="-1,0"/>
+            <blockSpan start="0,0" stop="0,-1"/>
+        </blockTableStyle>
+        <blockTableStyle id="checked_title">
+            <blockFont name="song" size="14"/>
+            <blockTextColor colorName="black"/>
+            <blockAlignment value="CENTER"/>
+            <blockValign value="MIDDLE" />
+            <lineStyle kind="OUTLINE" colorName="black" thickness="1"/>
+        </blockTableStyle>
+        <blockTableStyle id="checked_item">
+            <blockFont name="song"/>
+            <blockTextColor colorName="black"/>
+            <blockValign value="MIDDLE" />
+            <blockAlignment value="LEFT"/>
+            <lineStyle kind="INNERGRID" colorName="black" thickness="1"/>
+            <lineStyle kind="LINEABOVE" colorName="black" thickness="1"/>
+            <lineStyle kind="LINEBELOW" colorName="black" thickness="1"/>
+            <lineStyle kind="LINEBEFORE" colorName="black" thickness="1"/>
+            <lineStyle kind="LINEAFTER" colorName="black" thickness="1"/>
+            <blockSpan start="0,0" stop="0,-1"/>
+        </blockTableStyle>
+        <blockTableStyle id="checked_item_item">
+            <blockFont name="song"/>
+            <blockTextColor colorName="black"/>
+            <blockValign value="MIDDLE" />
+            <blockAlignment value="LEFT"/>
+            <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="0,0" stop="-1,-1"/>
+        </blockTableStyle>
+    </stylesheet>
+
+    <story>
+        <setNextTemplate name="head"/>
+            <spacer length="2cm"/>
+            <para style='title'>
+                <b>北京市大兴区公安消防支队</b>
+            </para>
+            <para style='title'>
+                <b>消防督查检查记录</b>
+            </para>
+            <para style="alignRight">
+                <b>编号：{{ data.get("code").encode('utf-8') }}</b>
+            </para>
+            <spacer length="2cm"/>
+            <blockTable style="checked_main" rowHeights="1cm" colWidths="6.5cm,12cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>被检查单位（场所）名称：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("shop_name").encode("utf-8") }}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="0.5cm"/>
+            <blockTable style="checked_main" rowHeights="1cm" colWidths="2.3cm,16.2cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>地 址：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("shop_address").encode("utf-8") }}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="0.5cm"/>
+            <blockTable style="checked_person" rowHeights="1cm" colWidths="4.5cm,5.5cm,2cm,6.5cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>消防安全责任人：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("shop_head").encode("utf-8") }}
+                        </para>
+                    </td>
+                     <td>
+                        <para style="noIndent">
+                            <b>电话：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("shop_head_phone").encode("utf-8") }}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="2cm"/>
+            <blockTable style="checked_person" rowHeights="1cm" colWidths="4.5cm,5.5cm,2cm,6.5cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>消防监督检查员：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("account_name").encode("utf-8") }}
+                        </para>
+                    </td>
+                     <td>
+                        <para style="noIndent">
+                            <b>电话：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("account_phone").encode("utf-8") }}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="0.5cm"/>
+            <blockTable style="checked_main" rowHeights="1cm" colWidths="4.1cm,14.4cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>消防检查时间：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("checked_date") }}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="0.5cm"/>
+            <blockTable style="checked_main" rowHeights="1cm" colWidths="8.9cm,9.6cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>被检查单位随同检查人员（签名）：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="noIndent"></para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="3.5cm"/>
+            <para style="alignCenter">
+                此记录由公安机关消防机构存档
+            </para>
+            <blockTable style="checked_title" rowHeights="1.4cm" colWidths="18.5cm">
+                <tr>
+                    <td>
+                        <para style="table_title">
+                            监督检查内容和情况
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            {{ for item_setting in data.get("item_settings") }}
+                <blockTable style="checked_item" rowHeights="{{ item_setting.get("row_length") }}" colWidths="1cm,17.5cm">
+                    {{ for child in item_setting.get("childs") }}
+                        <tr>
+                            <td>
+                                <para style="table_group"><b>{{ item_setting.get("group_name").encode("utf-8") }}</b></para>
+                            </td>
+                            <td>
+                                <para style="table_content">
+                                    {{ if child.get("have") }}
+                                        <img src="{{STATIC_DIR}}/static/pdf/{{ if child.get("data").get("have") }}ok{{ else }}no{{ endif }}.png" width="10" height="10"/>{{ child.get("have_name").encode("utf-8") }}
+                                    {{ endif }}
+                                    <b>{{ child.get("name").encode("utf-8") }}</b>
+                                    {{ if child.get("choice") and child.get("choice_option")}}
+                                        {{ for index,option in enumerate(child.get("choice_option")) }}
+                                            <img src="{{STATIC_DIR}}/static/pdf/{{ if index== child.get("data").get("choice") }}ok{{ else }}no{{ endif }}.png" width="10" height="10"/>{{ option.encode("utf-8") }}
+                                        {{ endfor }}
+                                    {{ endif }}
+                                    {{ if child.get("figure") }}
+                                        {{ child.get("figure_name").encode("utf-8") }}
+                                        {{ if child.get("data").get("figure") }}
+                                            <u>{{ child.get("data").get("figure").encode("utf-8") }}</u>
+                                        {{ else }}
+                                            __________
+                                        {{ endif }}
+                                    {{ endif }}
+                                    {{ if child.get("other") and child.get("other_name")}}
+                                        {{ child.get("other_name").encode("utf-8") }}
+                                        {{ if child.get("data").get("other") }}
+                                            <u>{{ child.get("data").get("other").encode("utf-8") }}</u>
+                                        {{ else }}
+                                            __________
+                                        {{ endif }}
+                                    {{ endif }}
+                                    {{ if child.get("note") and child.get("note_name") }}
+                                        {{ child.get("note_name").encode("utf-8") }}
+                                        {{ if child.get("data").get("note") }}
+                                            <u>{{ child.get("data").get("note").encode("utf-8") }}</u>
+                                        {{ else }}
+                                            __________
+                                        {{ endif }}
+                                    {{ endif }}
+                                </para>
+                            </td>
+                        </tr>
+                    {{ endfor }}
+                    <tr>
+                        <td>
+                            <para style="table_group">{{ item_setting.get("group_name").encode("utf-8") }}</para>
+                        </td>
+                        <td vAlign="top" topPadding="2">
+                            <para style="table_content_title">
+                                <b>本项抽查结果：</b>
+                                <img src="{{STATIC_DIR}}/static/pdf/{{ if item_setting.get("data").get("qualified") }}ok{{ else }}no{{ endif }}.png" width="10" height="10"/><b>合格</b>
+                                <img src="{{STATIC_DIR}}/static/pdf/{{ if not item_setting.get("data").get("qualified") }}ok{{ else }}no{{ endif }}.png" width="10" height="10"/><b>不合格</b>
+                            </para>
+                             <para style="table_content_left">
+                                {{ item_setting.get("data").get("note").encode("utf-8") if item_setting.get("data").get("note") else u"" }}
+                            </para>
+                        </td>
+                    </tr>
+                </blockTable>
+            {{ endfor }}
+            <spacer length="4cm"/>
+            <para style="alignLeft">
+                附件（抽查照片）：
+            </para>
+            {{ for image_item in data.get("images_set") }}
+                <illustration height="{{ image_item.get("height") }}" width="{{ image_item.get("width") }}">
+                    <image file="{{STATIC_DIR}}{{ image_item.get("photo") }}" x="0" y="0" height="{{ image_item.get("height") }}" width="{{ image_item.get("width") }}" preserveAspectRatio="1" showBoundary="yes"/>
+                </illustration>
+            {{ endfor }}
+        </story>
+</document>

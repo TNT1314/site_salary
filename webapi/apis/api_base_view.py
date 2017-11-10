@@ -16,9 +16,13 @@ __all__ = [
 
 import logging
 
-from rest_framework.response import Response
 from mixrestview.apiview import APIView
+from rest_framework.response import Response
 
+
+from site_salary.common.smtp import report_exception
+from site_salary.common.apicode import ApiCode
+from site_salary.common.backformat import JsonResponse
 from website.decorators.userdecorator import NeedCompanyUser
 
 
@@ -29,7 +33,8 @@ class BaseApiView(APIView):
     logger = logging.getLogger("api_view")
 
     def handle_exception(self, exc):
-        return Response(exc)
+        report_exception("500")
+        return Response(exc.message)
 
 
 class UserApiView(BaseApiView):

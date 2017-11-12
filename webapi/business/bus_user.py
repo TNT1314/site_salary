@@ -181,6 +181,7 @@ def get_menus_permission(user, modal):
         permission['cha'] = True
         permission['aud'] = True
         permission['del'] = True
+        permission['pri'] = True
         data['permission'] = permission
     else:
         m_user_menu = UserMenuRel.objects.filter(valid=True, com_user=user, menu__modal=modal).first()
@@ -195,6 +196,8 @@ def get_menus_permission(user, modal):
         permission['cha'] = getattr(r_user_menu, "p_cha", False) or getattr(r_group_menu, "p_cha", False)
         permission['aud'] = getattr(r_user_menu, "p_aud", False) or getattr(r_group_menu, "p_aud", False)
         permission['del'] = getattr(r_user_menu, "p_del", False) or getattr(r_group_menu, "p_del", False)
+        permission['pri'] = getattr(r_user_menu, "p_pri", False) or getattr(r_group_menu, "p_pri", False)
+        data['permission'] = permission
         data['permission'] = permission
 
     return code, mess, data

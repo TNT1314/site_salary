@@ -1,0 +1,5 @@
+repo: 453b7aaa92821249ea0fccf6e0d10544971fa95c
+node: 3627adb08cf4121d925f4c31d68b0e0a506fa1ca
+branch: default
+latesttag: ReportLab_2_7
+latesttagdistance: 1

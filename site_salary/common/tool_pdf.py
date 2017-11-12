@@ -14,7 +14,7 @@ import logging
 import StringIO
 from PIL import Image
 from django.conf import settings
-from site_salary.common.tool_rml2pdf import PdfUtils
+from site_salary.common.rml2pdf import RmlPdfUtils
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A3, landscape
 
@@ -78,18 +78,3 @@ def draw_image2pdf(imagechar, filename):
 
 
 
-def genarate_firesafetybill_pdf(user, id):
-    """
-        根据ID获取消防工单生成pdf
-        :param user:
-        :param id:
-        :return:
-    """
-
-    create_pdf = PdfUtils()
-
-    tem_path = os.path.join(settings.BASE_DIR, 'firefighting_map', 'templates', 'rml', 'firesafetyprint.prep')
-
-    binary_pdf = create_pdf.generate_local_pdf({}, tem_path, save_file=None)
-
-    return binary_pdf

@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 """
 
 from django.conf.urls import url, include
-
+from webapi import apis
 
 urlpatterns = [
     # 企业用户接口类
@@ -29,10 +29,13 @@ urlpatterns = [
     # 企业季度工资接口类
     url(r'^quarter/salary/', include('webapi.apis.api_quarter_salary')),
 
-    # 测试接口
-    url(r'^test/one/', include('webapi.apis.rest_view_test')),
+    # 打印接口类
+    url(r'^print$', apis.api_pdf.print_bill),
 
     # 测试接口
-    url(r'^test/two/', include('webapi.apis.api_test')),
+    #url(r'^test/one/', include('webapi.apis.rest_view_test')),
+
+    # 测试接口
+    #url(r'^test/two/', include('webapi.apis.api_test')),
 ]
  

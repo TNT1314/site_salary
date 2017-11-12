@@ -14,36 +14,31 @@ sys.path.append('/Users/liujun/builder_projects/firefighting_map/')
 
 import os
 import preppy
-import logging
 import traceback
 import trml2pdf
-from django.conf import settings
-from site_salary.settings import BASE_DIR
-
+import logging
 import reportlab.lib.styles
 from reportlab.pdfbase import pdfmetrics, ttfonts
 from reportlab.lib.fonts import addMapping
 
-pdf_logger = logging.getLogger('pdf')
 
-
-class PdfUtils(object):
+class RmlPdfUtils(object):
 
     """
         PDF 生成工具类
         将一个标准的RML文件正常解析为PDF文件，保存并返回。具体参数如下
     """
 
-    def __init__(self, font_dir=os.path.join(settings.BASE_DIR, 'static', 'fonts'), static_dir=settings.BASE_DIR):
+    def __init__(self, font_dir=None, static_dir=None):
         """
             构造方法
             @param font_dir 需要注册的字体文件目录
             @param static_dir 静态文件地址目录
         """
 
-        super(PdfUtils, self).__init__()
-
-        self.statics_path = static_dir
+        super(RmlPdfUtils, self).__init__()
+        font_dir = "{}/pdf_fonts".format(os.path.split(os.path.realpath(__file__))[0])
+        self.statics_dir = static_dir
 
         try:
             # 注册宋体字体
@@ -51,8 +46,8 @@ class PdfUtils(object):
             # 注册宋体粗体字体
             pdfmetrics.registerFont(ttfonts.TTFont('song_b', os.path.join(font_dir, 'STZHONGS.TTF')))
         except Exception as e:
-            pdf_logger.error(e)
-            pdf_logger.error(traceback.format_exc())
+            logging.error(e)
+            logging.error(traceback.format_exc())
 
         addMapping('song', 0, 0, 'song')     # normal
         addMapping('song', 0, 1, 'song')     # italic
@@ -62,7 +57,7 @@ class PdfUtils(object):
         # 设置自动换行
         reportlab.lib.styles.ParagraphStyle.defaults['wordWrap'] = "CJK"
 
-    def generate_local_pdf(self, data, template, save_file):
+    def generate_pdf(self, data, template, save_path):
         """
             从二进制流中创建PDF并返回
             @param data  渲染XML的数据字典
@@ -70,29 +65,30 @@ class PdfUtils(object):
             @param save_file PDF文件保存的地址（全路径）
         """
 
-        if not os.path.exists(save_file):
-            file_path_array = save_file.split("/")
+        if save_path and not os.path.exists(save_path):
+            file_path_array = save_path.split("/")
             save_file_dir = file_path_array[:-1]
 
             if not os.path.exists("/".join(save_file_dir)):
                 os.makedirs("/".join(save_file_dir))
 
         # 读取模板文件
-        m_template = preppy.getModule(template)
+        empty_template = preppy.getModule(template)
 
         # 渲染模板文件
-        render_data = {'data': data, 'STATIC_DIR': self.statics_path}
+        render_data = {'data': data, 'static': self.statics_dir}
 
         # 渲染PDF页面
-        char_rml = m_template.getOutput(render_data)
+        render_rml = empty_template.getOutput(render_data)
 
         # 生成PDF
-        pdf_binary = trml2pdf.parseString(char_rml)
+        binary_pdf = trml2pdf.parseString(render_rml)
 
-        # 保存PDF
-        open(save_file, 'wb').write(pdf_binary)
+        if save_path:
+            # 保存PDF
+            open(save_path, 'wb').write(binary_pdf)
 
-        return pdf_binary
+        return binary_pdf
 
     def generate_binary_pdf(self, data, template):
         """
@@ -102,13 +98,13 @@ class PdfUtils(object):
         """
 
         # 读取模板文件
-        m_template = preppy.getModule(template)
+        pdf_template = preppy.getModule(template)
 
         # 渲染模板文件
-        render_data = {'data': data, 'STATIC_DIR': self.statics_path}
+        render_data = {'data': data, 'static': self.statics_path}
 
         # 渲染PDF页面
-        char_rml = m_template.getOutput(render_data)
+        char_rml = pdf_template.getOutput(render_data)
 
         # 生成PDF
         pdf_binary = trml2pdf.parseString(char_rml)

@@ -31,6 +31,7 @@ class GroupMenuRel(ModelsBase):
     p_cha = models.BooleanField('修改权限', default=False, null=False, blank=False)
     p_aud = models.BooleanField('审核权限', default=False, null=False, blank=False)
     p_del = models.BooleanField('删除权限', default=False, null=False, blank=False)
+    p_pri = models.BooleanField('打印权限', default=False, null=False, blank=False)
 
     class Meta:
         db_table = 'group_menu_info'

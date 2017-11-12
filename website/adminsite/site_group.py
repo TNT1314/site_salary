@@ -23,7 +23,7 @@ class SiteGroupMenuRel(admin.TabularInline):
     model = GroupMenuRel
 
     fields = (
-        'valid', 'menu',  'p_inf', 'p_add', 'p_cha', 'p_aud', 'p_del', 'remarks'
+        'valid', 'menu',  'p_inf', 'p_add', 'p_cha', 'p_aud', 'p_del', 'p_pri', 'remarks'
     )
 
 

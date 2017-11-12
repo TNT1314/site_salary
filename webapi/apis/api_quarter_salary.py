@@ -20,7 +20,8 @@ from site_salary.common.define import (
 )
 from webapi.business.bus_quarter_salary import (
     user_get_quarter_salary_pager, user_get_quarter_salary,
-    user_add_quarter_salary, user_update_quarter_salary
+    user_add_quarter_salary, user_update_quarter_salary,
+    user_audit_quarter_salary,
 )
 
 
@@ -125,6 +126,29 @@ class QuarterSalaryChange(CompanyUserApiView):
             ('items', fields.CharField(required=False, help_text=u"工资明细项")),
         )
 
+
+
+@site
+class QuarterSalaryAudit(CompanyUserApiView):
+    """
+        获取物料定价详细信息接口
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        user = request.user
+
+        id = request.params.id
+
+        code, mess, data = user_audit_quarter_salary(user, id)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'audit'
+        param_fields = (
+            ('id', fields.IntegerField(required=True, help_text=u"季度薪资记录ID")),
+        )
 
 urlpatterns = site.urlpatterns
 

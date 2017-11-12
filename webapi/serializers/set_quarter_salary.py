@@ -115,6 +115,7 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
         用途： 列表展示
     """
 
+    company = serializers.SerializerMethodField()
     employee = serializers.SerializerMethodField()
     salary = serializers.SerializerMethodField()
     items = S_I_QuarterSalaryItem(many=True, read_only=True)
@@ -124,10 +125,18 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
     class Meta:
         model = QuarterSalary
         fields = [
-            "id", "year", "quarter", "employee",
+            "id", "year", "quarter", "employee", "company",
             "count", "salary", "status", "items", "remarks",
             "add_time", "cha_time"
         ]
+
+    def get_company(self, obj):
+        """
+
+        :param obj:
+        :return:
+        """
+        return obj.company.name
 
     def get_employee(self, obj):
         """

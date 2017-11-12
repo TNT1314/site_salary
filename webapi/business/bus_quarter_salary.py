@@ -33,9 +33,6 @@ from webapi.serializers.set_quarter_salary import (
 def user_get_quarter_salary_pager(user, p_size, p_numb, sortdatafield, sortorder, year, quarter, name):
     """
         用户获取员工工资列表
-        :param p_size:
-        :param p_num:
-        :return:
     """
 
     query = dict()
@@ -80,9 +77,6 @@ def user_get_quarter_salary_pager(user, p_size, p_numb, sortdatafield, sortorder
 def user_get_quarter_salary(user, id):
     """
         用户根据ID获取工人
-        :param user:
-        :param id:
-        :return:
     """
 
     code = ApiCode.success.code
@@ -97,13 +91,6 @@ def user_get_quarter_salary(user, id):
 def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
     """
         添加企业员工季度工资记录
-        :param user:
-        :param year:
-        :param employee:
-        :param quarter:
-        :param remarks:
-        :param items:
-        :return:
     """
 
     data = dict()
@@ -169,13 +156,6 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
 def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items):
     """
         修改企业员工季度工资记录
-        :param user:
-        :param year:
-        :param employee:
-        :param quarter:
-        :param remarks:
-        :param items:
-        :return:
     """
 
     data = dict()
@@ -244,6 +224,34 @@ def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items
         else:
             code = ApiCode.linenoexists.code
             mess = u"人员记录不存在，请核实！"
+    else:
+        code = ApiCode.linenoexists.code
+        mess = u"季度薪资记录不存在，请核实！ "
+    return code, mess, data
+
+
+def user_audit_quarter_salary(user, id):
+    """
+        用户审核季度薪资结果
+    """
+
+    data = dict()
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    q_quarter_sets = QuarterSalary.objects.filter(company=user.company, id=id)
+
+    if q_quarter_sets.first():
+        m_quarter = q_quarter_sets.first()
+
+        if m_quarter.status == ENUM_STATUS_ALL.NEW:
+            m_quarter.status = ENUM_STATUS_ALL.AUD
+            m_quarter.save(update_fields=['status'])
+            data['id'] = m_quarter.id
+            data['name'] = m_quarter.employee.name
+        else:
+            code = ApiCode.edilineerror.code
+            mess = u"季度薪资记录当前状态不能进行审核！ "
     else:
         code = ApiCode.linenoexists.code
         mess = u"季度薪资记录不存在，请核实！ "

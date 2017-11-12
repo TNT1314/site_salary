@@ -8,3 +8,4 @@ from __future__ import unicode_literals
     desc: site_salary
 """
 
+import api_pdf

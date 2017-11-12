@@ -32,7 +32,7 @@ class QuarterSalary(ModelsBase):
     employee = models.ForeignKey('EmployeeInfo', null=False, blank=False, db_constraint=False, verbose_name='雇员', on_delete=models.DO_NOTHING, db_index=True, help_text='该工资单的雇员')
     company = models.ForeignKey('CompanyInfo', null=False, blank=False, db_constraint=False, verbose_name='公司', on_delete=models.DO_NOTHING, db_index=True, help_text='公司')
     count = models.IntegerField("工件数量", null=False, blank=False, default=0, help_text='当前季度的总额')
-    salary = models.DecimalField("工资总额", null=False, blank=False, max_digits=16, decimal_places=4, default=0.00, help_text='当前季度的总额')
+    salary = models.DecimalField("工资总额", null=False, blank=False, max_digits=16, decimal_places=2, default=0.00, help_text='当前季度的总额')
     status = models.IntegerField("状态", choices=LIST_STATUS_ALL, default=ENUM_STATUS_ALL.NEW, null=False, blank=False, help_text="工资单状态")
 
     class Meta:
@@ -54,10 +54,10 @@ class QuarterSalaryItem(ModelsBase):
     material = models.ForeignKey('MaterialInfo', null=False, blank=False, db_constraint=False, verbose_name='工件', on_delete=models.DO_NOTHING, db_index=True, help_text='加工工件')
     mat_name = models.CharField("工件名称", null=False, blank=False, max_length=100, db_index=True, help_text="工件名称")
     mat_standards = models.CharField('工件规格', max_length=500, null=True, blank=True, help_text="物料规格，从长宽高等汇总")
-    mat_price = models.DecimalField("加工价格", null=False, blank=False, max_digits=16, decimal_places=4, default=0.00, help_text='加工该物料的价格')
+    mat_price = models.DecimalField("加工价格", null=False, blank=False, max_digits=16, decimal_places=2, default=0.00, help_text='加工该物料的价格')
     mat_count = models.IntegerField("计件数量", null=False, blank=False, default=0, help_text='加工该物料的价格')
     mat_unit = models.CharField("计件单位", max_length=100, null=False, blank=False, default="件", help_text='计件单位')
-    mat_total = models.DecimalField("计件金额", null=False, blank=False, max_digits=16, decimal_places=4, default=0.00, help_text='计件金额， 加工价格*计件数量')
+    mat_total = models.DecimalField("计件金额", null=False, blank=False, max_digits=16, decimal_places=2, default=0.00, help_text='计件金额， 加工价格*计件数量')
 
     class Meta:
         db_table = 'quarter_salary_item'

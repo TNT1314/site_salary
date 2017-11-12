@@ -34,7 +34,7 @@ class BaseApiView(APIView):
 
     def handle_exception(self, exc):
         report_exception("500")
-        return Response(exc.message)
+        return Response(exc.message) if exc.message else Response(exc.args)
 
 
 class UserApiView(BaseApiView):

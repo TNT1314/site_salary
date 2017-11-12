@@ -117,6 +117,7 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
 
     company = serializers.SerializerMethodField()
     employee = serializers.SerializerMethodField()
+    quarter_name = serializers.SerializerMethodField()
     salary = serializers.SerializerMethodField()
     items = S_I_QuarterSalaryItem(many=True, read_only=True)
     add_time = serializers.SerializerMethodField()
@@ -125,7 +126,7 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
     class Meta:
         model = QuarterSalary
         fields = [
-            "id", "year", "quarter", "employee", "company",
+            "id", "year", "quarter", "quarter_name","employee", "company",
             "count", "salary", "status", "items", "remarks",
             "add_time", "cha_time"
         ]
@@ -149,6 +150,13 @@ class S_I_QuarterSalary(serializers.ModelSerializer):
         employee['id'] = obj.employee.id
         employee['name'] = obj.employee.name
         return employee
+
+    def get_quarter_name(self, obj):
+        """
+            :param obj:
+            :return:
+        """
+        return DICT_QUARTER_ALL[obj.quarter] if obj.quarter else ""
 
     def get_salary(self, obj):
         """

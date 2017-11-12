@@ -11,7 +11,7 @@
             <pageGraphics>
                 <setFont name="song" size="11"/>
                 <image file="{{static}}/static/image/logo.ico" x="39" y="781" width="15" height="15"/>
-                <drawString x="56" y="785">WormerERP 由提 wormer 供技术支持</drawString>
+                <drawString x="56" y="785">WormerERP 由 Wormer 提供技术支持</drawString>
                 <fill color="black"/>
                 <setFont name="song" size="10"/>
                 <lineMode width="1"/>
@@ -31,26 +31,11 @@
         <initialize>
             <alias id="style.normal" value="style.Normal"/>
         </initialize>
-        <paraStyle name="common"  fontName="song" fontSize="12" leading="18" spaceBefore="6" spaceAfter="12" firstLineIndent="0.5in" />
-        <paraStyle name="title" fontName="song" alignment="center" fontSize="18" leading="6" spaceBefore="6" spaceAfter="50" />
-        <paraStyle name="noIndent" fontName="song" alignment="left" fontSize="14" leading="15" spaceBefore="6" spaceAfter="8" />
-        <paraStyle name="alignLeft" fontName="song" alignment="left" fontSize="12" leading="15" spaceBefore="6" spaceAfter="8" firstLineIndent="0.2in" />
-        <paraStyle name="alignRight" fontName="song" alignment="right"  fontSize="14" leading="15" spaceBefore="6" spaceAfter="12" firstLineIndent="0.5in" />
-        <paraStyle name="alignCenter" fontName="song" alignment="center" fontSize="12" leading="12" spaceBefore="12" spaceAfter="12" />
-        <paraStyle name="paddingLeft" fontName="song" alignment="left"  fontSize="12" leading="15" spaceBefore="6" spaceAfter="8" firstLineIndent="250" />
-        <paraStyle name="table_title" fontName="song" alignment="center" fontSize="14" leading="14" spaceBefore="14" spaceAfter="14" />
-        <paraStyle name="table_group" fontName="song" alignment="center" fontSize="10" leading="12" spaceBefore="10" spaceAfter="10" />
-        <paraStyle name="table_content_title" fontName="song" alignment="left" fontSize="10" leading="12" spaceBefore="2" spaceAfter="10" />
-        <paraStyle name="table_content" fontName="song" alignment="left" fontSize="10" leading="10" spaceBefore="10" spaceAfter="10" />
-        <paraStyle name="table_content_left" fontName="song" leftIndent = "1in"/>
-        <blockTableStyle id="checked_main">
-            <blockFont name="song"/>
-            <blockTextColor colorName="black"/>
-            <blockValign value="BOTTOM" />
-            <blockAlignment value="LEFT"/>
-            <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="1,0" stop="-1,0"/>
-            <blockSpan start="0,0" stop="0,-1"/>
-        </blockTableStyle>
+        <paraStyle name="title" fontName="song" alignment="center" fontSize="18" leading="6" spaceBefore="6" spaceAfter="50"/>
+        <paraStyle name="noIndent" fontName="song" alignment="left" fontSize="14" leading="15" spaceBefore="6" spaceAfter="8"/>
+        <paraStyle name="alignLeft" fontName="song" alignment="left" fontSize="11" leading="11" spaceBefore="4" spaceAfter="4"/>
+        <paraStyle name="alignRight" fontName="song" alignment="right"  fontSize="11" leading="11" spaceBefore="4" spaceAfter="4"/>
+        <paraStyle name="alignCenter" fontName="song" alignment="center" fontSize="11" leading="11" spaceBefore="4" spaceAfter="4" />
         <blockTableStyle id="checked_person">
             <blockFont name="song"/>
             <blockTextColor colorName="black"/>
@@ -59,13 +44,6 @@
             <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="1,0" stop="1,0"/>
             <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="3,0" stop="-1,0"/>
             <blockSpan start="0,0" stop="0,-1"/>
-        </blockTableStyle>
-        <blockTableStyle id="checked_title">
-            <blockFont name="song" size="14"/>
-            <blockTextColor colorName="black"/>
-            <blockAlignment value="CENTER"/>
-            <blockValign value="MIDDLE" />
-            <lineStyle kind="OUTLINE" colorName="black" thickness="1"/>
         </blockTableStyle>
         <blockTableStyle id="checked_item">
             <blockFont name="song"/>
@@ -77,26 +55,144 @@
             <lineStyle kind="LINEBELOW" colorName="black" thickness="1"/>
             <lineStyle kind="LINEBEFORE" colorName="black" thickness="1"/>
             <lineStyle kind="LINEAFTER" colorName="black" thickness="1"/>
-            <blockSpan start="0,0" stop="0,-1"/>
-        </blockTableStyle>
-        <blockTableStyle id="checked_item_item">
-            <blockFont name="song"/>
-            <blockTextColor colorName="black"/>
-            <blockValign value="MIDDLE" />
-            <blockAlignment value="LEFT"/>
-            <lineStyle kind="LINEBELOW" colorName="black" thickness="1" start="0,0" stop="-1,-1"/>
         </blockTableStyle>
     </stylesheet>
 
     <story>
         <setNextTemplate name="head"/>
-            <spacer length="2cm"/>
+            <spacer length="1cm"/>
             <para style='title'>
-                <b> {{ data.get("company").encode("utf-8") }} 季度薪资</b>
+                <b> {{ data.get("company").encode("utf-8") }}——季度薪资</b>
             </para>
             <para style="alignRight">
-                <b>编号：{{ data.get("year") }}_{{ data.get("id")}}</b>
+                <b>编号：{{ data.get("year") }}-{{ data.get("quarter")}}-{{ data.get("employee").get("id") }}</b>
             </para>
-            <spacer length="2cm"/>
+            <blockTable style="checked_person" rowHeights="1cm" colWidths="3.5cm,6cm,3cm,6cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>年份季度：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("year") }}/{{ data.get("quarter_name").encode("utf-8") }}
+                        </para>
+                    </td>
+                    <td>
+                        <para style="noIndent">
+                            <b>薪资人员：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("employee").get("name").encode("utf-8") }}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <blockTable style="checked_person" rowHeights="1cm" colWidths="3.5cm,6cm,3cm,6cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>计件数量：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("count") }}
+                        </para>
+                    </td>
+                    <td>
+                        <para style="noIndent">
+                            <b>薪资金额：</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            {{ data.get("salary")}}
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="1cm"/>
+            <blockTable style="checked_person" rowHeights="1cm" colWidths="18.5cm">
+                <tr>
+                    <td>
+                        <para style="noIndent">
+                            <b>计件明细：</b>
+                        </para>
+                    </td>
+                </tr>
+            </blockTable>
+            <spacer length="0.5cm"/>
+            <blockTable style="checked_item" rowHeights="{{ data.get("row_height") }}" colWidths="3cm,5.5cm,2.5cm,2.5cm,2cm,3cm">
+                <tr>
+                    <td>
+                        <para style="alignLeft">
+                            <b>工件名称</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            <b>工件规格</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            <b>工件单价</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            <b>完成数量</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            <b>计件单位</b>
+                        </para>
+                    </td>
+                    <td>
+                        <para style="alignCenter">
+                            <b>计件金额</b>
+                        </para>
+                    </td>
+                </tr>
+                {{ for child in data.get("items") }}
+                    <tr>
+                        <td>
+                            <para style="alignLeft">
+                                {{ child.get("mat_name").encode("utf-8") }}
+                            </para>
+                        </td>
+                        <td>
+                            <para style="alignLeft">
+                                {{ child.get("mat_standards").encode("utf-8") }}
+                            </para>
+                        </td>
+                        <td>
+                            <para style="alignRight">
+                                {{ child.get("mat_price")}}
+                            </para>
+                        </td>
+                        <td>
+                            <para style="alignRight">
+                                {{ child.get("mat_count")}}
+                            </para>
+                        </td>
+                        <td>
+                            <para style="alignCenter">
+                                {{ child.get("mat_unit").encode("utf-8") }}
+                            </para>
+                        </td>
+                        <td>
+                            <para style="alignRight">
+                                {{ child.get("mat_total").encode("utf-8") }}
+                            </para>
+                        </td>
+                    </tr>
+                {{ endfor }}
+            </blockTable>
         </story>
 </document>

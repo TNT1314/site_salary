@@ -36,6 +36,10 @@ def generate_quarter_salary_pdf(user, id):
 
     s_quarter = S_I_QuarterSalary(m_quarter)
 
-    binary_pdf = rml_pdf_util.generate_pdf(s_quarter.data, template_path, save_path)
+    quarter_data = s_quarter.data
+
+    quarter_data["row_height"] = ",".join((len(quarter_data["items"])+1) * ["1cm"])
+
+    binary_pdf = rml_pdf_util.generate_pdf(quarter_data, template_path, save_path)
 
     return save_name, binary_pdf

@@ -32,5 +32,5 @@ class S_U_Menu(serializers.ModelSerializer):
     class Meta:
         model = MenuInfo
         fields = [
-            "id", "code", "name", "icon", "modal", "desc",
+            "id", "code", "name", "icon", "model", "desc",
         ]

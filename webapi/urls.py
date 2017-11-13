@@ -33,9 +33,9 @@ urlpatterns = [
     url(r'^print$', apis.api_pdf.print_bill),
 
     # 测试接口
-    #url(r'^test/one/', include('webapi.apis.rest_view_test')),
+    url(r'^test/one/', include('webapi.apis.rest_view_test')),
 
     # 测试接口
-    #url(r'^test/two/', include('webapi.apis.api_test')),
+    url(r'^test/two/', include('webapi.apis.api_test')),
 ]
  

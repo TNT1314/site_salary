@@ -160,12 +160,9 @@ def get_user_menus(user):
     return code, mess, data
 
 
-def get_menus_permission(user, modal):
+def get_menus_permission(user, model):
     """
         获取菜单权限
-        :param user:
-        :param modal:
-        :return:
     """
 
     code = ApiCode.success.code
@@ -175,7 +172,7 @@ def get_menus_permission(user, modal):
 
     permission = OrderedDict()
 
-    if modal in ('help', 'grid'):
+    if model in ('help', 'grid'):
         permission['inf'] = True
         permission['add'] = True
         permission['cha'] = True
@@ -184,8 +181,8 @@ def get_menus_permission(user, modal):
         permission['pri'] = True
         data['permission'] = permission
     else:
-        m_user_menu = UserMenuRel.objects.filter(valid=True, com_user=user, menu__modal=modal).first()
-        m_group_menu = GroupMenuRel.objects.filter(valid=True, group=user.group, menu__modal=modal).first()
+        m_user_menu = UserMenuRel.objects.filter(valid=True, com_user=user, menu__model=model).first()
+        m_group_menu = GroupMenuRel.objects.filter(valid=True, group=user.group, menu__model=model).first()
 
         r_user_menu = UserMenuRel() if not m_user_menu else m_user_menu
 

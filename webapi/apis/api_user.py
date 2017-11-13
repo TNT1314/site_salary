@@ -96,23 +96,23 @@ class UserMenuGet(CompanyUserApiView):
 
 
 @site
-class ModalPermissionGet(CompanyUserApiView):
+class ModelPermissionGet(CompanyUserApiView):
     """
         企业用户登录接口
     """
 
     def get_context(self, request, *args, **kwargs):
 
-        modal = request.params.modal
+        model = request.params.model
 
-        code, mess, data = get_menus_permission(request.user, modal)
+        code, mess, data = get_menus_permission(request.user, model)
 
         return JsonResponse(code, mess, data)
 
     class Meta:
-        path = 'modal/permission/get'
+        path = 'model/permission/get'
         param_fields = (
-            ('modal', fields.CharField(required=True, help_text=u"模型名称")),
+            ('model', fields.CharField(required=True, help_text=u"模型名称")),
         )
 
 urlpatterns = site.urlpatterns

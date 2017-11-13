@@ -126,7 +126,7 @@
                 </tr>
             </blockTable>
             <spacer length="0.5cm"/>
-            <blockTable style="checked_item" rowHeights="{{ data.get("row_height") }}" colWidths="3cm,5.5cm,2.5cm,2.5cm,2cm,3cm">
+            <blockTable style="checked_item" rowHeights="{{ data.get("row_height") }}" colWidths="4.5cm,5.5cm,2cm,2cm,2cm,2.5cm">
                 <tr>
                     <td>
                         <para style="alignLeft">

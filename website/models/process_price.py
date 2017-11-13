@@ -24,7 +24,7 @@ class ProcessPrice(ModelsBase):
 
     material = models.OneToOneField('MaterialInfo', null=False, blank=False, db_constraint=False,
                                 verbose_name='物料信息', on_delete=models.DO_NOTHING, db_index=True, help_text='物料信息')
-    price = models.DecimalField("加工价格", null=False, blank=False, max_digits=16, decimal_places=4, help_text='加工该物料的价格')
+    price = models.DecimalField("加工价格", null=False, blank=False, max_digits=16, decimal_places=2, help_text='加工该物料的价格')
     unit = models.CharField("计件单位", max_length=100, null=False, blank=False, default="件", help_text='计件单位')
 
     class Meta:

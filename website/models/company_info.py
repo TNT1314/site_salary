@@ -22,8 +22,8 @@ class CompanyInfo(ModelsBase):
         公司信息表
     """
 
-    code = models.CharField('公司编码', unique=True, max_length=10, null=True, blank=True)
-    name = models.CharField('公司名称', max_length=10, null=False, blank=False)
+    code = models.CharField('公司编码', unique=True, max_length=50, null=True, blank=True)
+    name = models.CharField('公司名称', max_length=500, null=False, blank=False)
     shot_name = models.CharField('公司简称', max_length=10, null=False, blank=False)
     license = models.CharField('营业执照', null=True, blank=True, max_length=100)
     address = models.CharField('公司地点', null=True, blank=True, max_length=500)

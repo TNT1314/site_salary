@@ -23,8 +23,8 @@ class GroupInfo(ModelsBase):
         分组信息
     """
 
-    code = models.CharField('分组编码', unique=True, max_length=10, null=True, blank=True)
-    name = models.CharField('分组名称', max_length=10, null=False, blank=False)
+    code = models.CharField('分组编码', unique=True, max_length=50, null=True, blank=True)
+    name = models.CharField('分组名称', max_length=500, null=False, blank=False)
     desc = models.CharField('分组描述', null=True, blank=True, max_length=500)
 
     class Meta:

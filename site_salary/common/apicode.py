@@ -29,7 +29,7 @@ ApiCode = Enum(
     edilineerror=Enum(code=6, mess="保存记录出错！"),
     linenoexists=Enum(code=7, mess="请求的记录不存在！"),
     submitsecond=Enum(code=8, mess="重复提交！"),
-    logincodeerr=Enum(code=10, mess="验证码错误，请重写输入！"),
+    logincodeerr=Enum(code=10, mess="验证码实效，请重新获取！"),
 
     success=Enum(code=10000, mess="请求成功。"),
 )

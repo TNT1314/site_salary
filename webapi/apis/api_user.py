@@ -73,13 +73,21 @@ class UserLogin(BaseApiView):
         username = request.params.username
         password = request.params.password
 
-        if vcode.upper() == request.session['vcode']:
+        back_vcode = request.session['vcode'] if request.session.has_key('vcode') else None
+
+        if back_vcode and vcode.upper() == back_vcode:
             code, mess, data = user_login(request, username, password)
             del request.session['vcode']
-        else:
+
+        elif not back_vcode:
+            data = dict()
             code = ApiCode.logincodeerr.code
             mess = ApiCode.logincodeerr.mess
+
+        else:
             data = dict()
+            code = ApiCode.unkonwnerror.code
+            mess = ApiCode.unkonwnerror.mess
         return JsonResponse(code, mess, data)
 
     class Meta:

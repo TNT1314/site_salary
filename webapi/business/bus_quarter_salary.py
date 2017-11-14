@@ -15,6 +15,7 @@ import json
 from decimal import Decimal
 
 from django.db import transaction
+from django.db.models import F
 from django.db.utils import IntegrityError
 
 from site_salary.common.apicode import ApiCode
@@ -140,6 +141,8 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
                 for item in quarter_salary_items:
                     item.parent = m_quarter_salary
                     item.save()
+                    item.material.count = F('count') + 1
+                    item.material.save(update_fields=['count'])
 
             data['id'] = m_quarter_salary.id
             data['name'] = m_quarter_salary.employee.name
@@ -206,13 +209,16 @@ def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items
                     with transaction.atomic():
                         old_items = QuarterSalaryItem.objects.filter(parent=m_quarter_salary.id)
                         for old_item in old_items:
+                            old_item.material.count = F('count') - 1
+                            old_item.material.save(update_fields=['count'])
                             old_item.delete()
 
                         m_quarter_salary.save()
                         for item in quarter_salary_items:
                             item.parent = m_quarter_salary
                             item.save()
-
+                            item.material.count = F("count") + 1
+                            item.material.save(update_fields=['count'])
                     data['id'] = m_quarter_salary.id
                     data['name'] = m_quarter_salary.employee.name
                 except IntegrityError:

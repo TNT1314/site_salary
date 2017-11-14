@@ -33,8 +33,7 @@ class EmployeeInfo(ModelsBase):
     phone = models.BigIntegerField('联系电话', null=True, blank=True, help_text='联系电话')
     status = models.IntegerField('状态', null=False, blank=False, choices=LIST_EMPLOYEE_STATUS, default=ENUM_EMPLOYEE_STATUS.ONLINE, help_text='员工状态')
     address = models.CharField('家庭住址', null=True, blank=True, max_length=500, help_text='家庭住址')
-    company = models.ForeignKey('CompanyInfo', null=False, blank=False, db_constraint=False,
-                                verbose_name='公司信息', on_delete=models.DO_NOTHING, db_index=True, help_text='所属公司')
+    company = models.ForeignKey('CompanyInfo', null=False, blank=False, db_constraint=False, verbose_name='公司信息', on_delete=models.DO_NOTHING, db_index=True, help_text='所属公司')
 
     class Meta:
         db_table = 'employee_info'

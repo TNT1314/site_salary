@@ -11,17 +11,53 @@ from __future__ import unicode_literals
         用户类业务方法
 """
 
+
 from mixrestview import ViewSite, fields
 
+from django.contrib.auth.models import AnonymousUser
+
 from .api_base_view import BaseApiView, CompanyUserApiView
+
+from site_salary.common.apicode import ApiCode
 from site_salary.common.backformat import JsonResponse
 from webapi.business.bus_user import (
-    user_login, user_login_out, get_user_info, get_user_menus,
-    get_menus_permission
+    generate_code_image, user_login, user_login_out, get_user_info,
+    get_user_menus, get_menus_permission
 )
 
 
 site = ViewSite(name="user", app_name="webapi")
+
+@site
+class GeneratorImageCode(BaseApiView):
+    """
+        生成随机验证码
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        user = request.user
+
+        if isinstance(user, AnonymousUser) :
+            request.session.save()
+            wid = request.params.wid
+            hei = request.params.hei
+
+            code, mess, data, vcode = generate_code_image(wid, hei)
+
+            request.session['vcode'] = vcode
+        else:
+            code = ApiCode.userhadlogin.code
+            mess = ApiCode.userhadlogin.mess
+            data = dict()
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'login/vcode/get'
+        param_fields = (
+            ('wid', fields.IntegerField(required=False, help_text=u"生成验证码的宽度")),
+            ('hei', fields.IntegerField(required=False, help_text=u"生成验证码的长度")),
+        )
 
 
 @site
@@ -32,11 +68,18 @@ class UserLogin(BaseApiView):
 
     def get_context(self, request, *args, **kwargs):
 
+        vcode = request.params.vcode
+
         username = request.params.username
         password = request.params.password
 
-        code, mess, data = user_login(request, username, password)
-
+        if vcode.upper() == request.session['vcode']:
+            code, mess, data = user_login(request, username, password)
+            del request.session['vcode']
+        else:
+            code = ApiCode.logincodeerr.code
+            mess = ApiCode.logincodeerr.mess
+            data = dict()
         return JsonResponse(code, mess, data)
 
     class Meta:
@@ -44,6 +87,7 @@ class UserLogin(BaseApiView):
         param_fields = (
             ('username', fields.CharField(required=True, help_text=u"企业账号")),
             ('password', fields.CharField(required=True, help_text=u"登录密码")),
+            ('vcode', fields.CharField(required=True, help_text=u"验证码")),
         )
 
 

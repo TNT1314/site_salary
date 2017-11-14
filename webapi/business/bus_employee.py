@@ -155,7 +155,7 @@ def user_get_employee_by_term(user, term):
     query['name__contains'] = term
     query['company'] = user.company
 
-    m_employee = EmployeeInfo.objects.filter(**query)
+    m_employee = EmployeeInfo.objects.filter(**query)[:10]
 
     s_employee = S_CN_Employee(m_employee, many=True)
     results = s_employee.data if s_employee else list()

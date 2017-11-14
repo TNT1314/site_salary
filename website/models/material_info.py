@@ -52,6 +52,7 @@ class MaterialInfo(ModelsBase):
                                    help_text="物料的高度单位")
     company = models.ForeignKey('CompanyInfo', null=False, blank=False, db_constraint=False,
                                 verbose_name='公司信息', on_delete=models.DO_NOTHING, db_index=True, help_text='所属公司')
+    count = models.IntegerField("使用次数", null=True, blank=True, default=0, help_text="物料的使用次数")
 
     class Meta:
         db_table = 'material_info'

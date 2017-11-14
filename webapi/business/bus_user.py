@@ -16,14 +16,32 @@ from django.contrib.auth import (
 )
 
 from site_salary.common.apicode import ApiCode
+from site_salary.common.imagecode import ImageCodeUtil
 
-from website.models.menu_info import MenuInfo
 from website.models.company_user import CompanyUser
 from website.models.user_menu_rel import UserMenuRel
 from website.models.group_menu_rel import GroupMenuRel
 
 from webapi.serializers.ser_company_user import S_P_CompanyUser
 from webapi.serializers.ser_menus import S_U_Menu
+
+
+def generate_code_image(wid, hei):
+    """
+        用户登录方法
+    """
+
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    if wid and hei:
+        code_image = ImageCodeUtil(size=(wid, hei))
+    else:
+        code_image = ImageCodeUtil()
+
+    img, v_code = code_image.generate_base64_image4code()
+
+    return code, mess, img, v_code
 
 
 def user_login(request, username, password):

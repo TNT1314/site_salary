@@ -210,7 +210,7 @@ def user_get_process_price_simple(user, name):
 
     query['material__company'] = user.company
 
-    q_sets = ProcessPrice.objects.filter(**query)
+    q_sets = ProcessPrice.objects.filter(**query).order_by("-material__count")[:10]
 
     s_serial = S_L_ProcessPrice(q_sets, many=True) if q_sets else None
 

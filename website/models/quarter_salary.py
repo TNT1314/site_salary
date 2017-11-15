@@ -51,6 +51,7 @@ class QuarterSalaryItem(ModelsBase):
     """
 
     parent = models.ForeignKey('QuarterSalary', null=False, blank=False, db_constraint=False, verbose_name='工资主表', related_name='items', on_delete=models.CASCADE, db_index=True, help_text='工资主表')
+    process = models.ForeignKey('ProcessPrice', null=False, blank=False, db_constraint=False, verbose_name='工件定价', on_delete=models.DO_NOTHING, db_index=True, help_text='加工工件定价ID')
     material = models.ForeignKey('MaterialInfo', null=False, blank=False, db_constraint=False, verbose_name='工件', on_delete=models.DO_NOTHING, db_index=True, help_text='加工工件')
     mat_name = models.CharField("工件名称", null=False, blank=False, max_length=100, db_index=True, help_text="工件名称")
     mat_standards = models.CharField('工件规格', max_length=500, null=True, blank=True, help_text="物料规格，从长宽高等汇总")

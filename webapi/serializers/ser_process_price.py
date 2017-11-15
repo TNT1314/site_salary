@@ -91,4 +91,37 @@ class S_L_ProcessPrice(serializers.ModelSerializer):
             :return:
         """
         return obj.cha_time.strftime("%Y-%m-%d %H:%M:%S") if obj.cha_time else ""
- 
+
+
+class S_TREM_ProcessPrice(serializers.ModelSerializer):
+    """
+        企业物料列表序列化
+    """
+
+    material = serializers.SerializerMethodField()
+    material_name = serializers.SerializerMethodField()
+    standards = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProcessPrice
+        fields = [
+            "id", "material", "material_name", "standards", "price", "unit"
+        ]
+
+    def get_material(self, obj):
+        """
+            获取物料ID
+        """
+        return obj.material.id
+
+    def get_material_name(self, obj):
+        """
+            获取物料名称
+        """
+        return obj.material.name
+
+    def get_standards(self, obj):
+        """
+            获取物料规格
+        """
+        return obj.material.standards

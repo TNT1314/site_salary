@@ -109,9 +109,10 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
         quarter_salary_items = list()
 
         for process_price in process_prices:
-            m_process_price = ProcessPrice.objects.get(pk=process_price['material'])
+            m_process_price = ProcessPrice.objects.get(pk=process_price['process'])
 
             quarter_salary_item = QuarterSalaryItem()
+            quarter_salary_item.process = m_process_price
             quarter_salary_item.material = m_process_price.material
             quarter_salary_item.mat_name = m_process_price.material.name
             quarter_salary_item.mat_standards = m_process_price.material.standards
@@ -178,9 +179,10 @@ def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items
             quarter_salary_items = list()
 
             for process_price in process_prices:
-                m_process_price = ProcessPrice.objects.get(pk=process_price['material'])
+                m_process_price = ProcessPrice.objects.get(pk=process_price['process'])
 
                 quarter_salary_item = QuarterSalaryItem()
+                quarter_salary_item.process = m_process_price
                 quarter_salary_item.material = m_process_price.material
                 quarter_salary_item.mat_name = m_process_price.material.name
                 quarter_salary_item.mat_standards = m_process_price.material.standards

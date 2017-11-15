@@ -11,15 +11,17 @@ from __future__ import unicode_literals
 """
 
 from django.db import transaction
+from django.db.models import Q
 from django.db.utils import IntegrityError
 
 from site_salary.common.apicode import ApiCode
 from site_salary.common.untils import get_paging_index
+from site_salary.common.split_ch import split_chinese_english
 from website.models.process_price import ProcessPrice
 from website.models.material_info import MaterialInfo
 from webapi.serializers.ser_material import S_Price_MaterialInfo
 from webapi.serializers.ser_process_price import (
-    S_ProcessPrice, S_L_ProcessPrice,
+    S_ProcessPrice, S_L_ProcessPrice, S_TREM_ProcessPrice
 )
 
 
@@ -203,17 +205,37 @@ def user_get_process_price_simple(user, name):
     code = ApiCode.success.code
     mess = ApiCode.success.mess
 
-    query = dict()
+    query = set()
+
+    query.add(Q(material__company=user.company))
 
     if name:
-        query['material__name__contains'] = name
+        ch_list, en_list = split_chinese_english(name)
 
-    query['material__company'] = user.company
+        name_query = None
+        for inx,ch in enumerate(ch_list):
+            if inx==0:
+                name_query = Q(material__name__contains=ch)
+            elif inx < len(ch_list) -1:
+                name_query |= Q(material__name__contains=ch)
 
-    q_sets = ProcessPrice.objects.filter(**query).order_by("-material__count")[:10]
+        if name_query:
+            query.add(name_query)
 
-    s_serial = S_L_ProcessPrice(q_sets, many=True) if q_sets else None
+        stand_query = None
+        for inx, en in enumerate(en_list):
+            if inx==0:
+                stand_query = Q(material__standards__contains=en)
+            elif inx < len(en_list) - 1:
+                stand_query |= Q(material__standards__contains=en)
 
-    data = s_serial.data if s_serial else None
+        if stand_query:
+            query.add(stand_query)
+
+    q_sets = ProcessPrice.objects.filter(*query).order_by("-material__count")[:10]
+
+    s_serial = S_TREM_ProcessPrice(q_sets, many=True) if q_sets else None
+
+    data = s_serial.data if s_serial else list()
 
     return code, mess, data

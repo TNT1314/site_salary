@@ -153,7 +153,7 @@ class ProcessPriceChange(CompanyUserApiView):
         )
 
 @site
-class ProcessPriceGetByID(CompanyUserApiView):
+class ProcessPriceGetByName(CompanyUserApiView):
     """
         获取物料定价详细信息接口
     """

@@ -31,7 +31,7 @@ site = ViewSite(name="quarter_salary", app_name="webapi")
 @site
 class QuarterSalaryList(CompanyUserApiView):
     """
-        雇员工资表
+        获取季度工资列表
     """
 
     def get_context(self, request, *args, **kwargs):

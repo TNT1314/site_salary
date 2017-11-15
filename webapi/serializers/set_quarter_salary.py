@@ -104,7 +104,7 @@ class S_I_QuarterSalaryItem(serializers.ModelSerializer):
     class Meta:
         model = QuarterSalaryItem
         fields = [
-            "id", "material", "mat_name", "mat_standards", "mat_price",
+            "id", "process", "material", "mat_name", "mat_standards", "mat_price",
             "mat_count", "mat_unit", "mat_total", "remarks",
         ]
 

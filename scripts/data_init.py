@@ -11,10 +11,13 @@ from __future__ import unicode_literals
 """
 
 import os
+import sys
 import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "site_salary.settings")
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 django.setup()
+
 
 from django.db import transaction
 from website.models.menu_info import MenuInfo

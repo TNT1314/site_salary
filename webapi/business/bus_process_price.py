@@ -216,7 +216,7 @@ def user_get_process_price_simple(user, name):
         for inx,ch in enumerate(ch_list):
             if inx==0:
                 name_query = Q(material__name__contains=ch)
-            elif inx < len(ch_list) -1:
+            else:
                 name_query |= Q(material__name__contains=ch)
 
         if name_query:
@@ -224,9 +224,9 @@ def user_get_process_price_simple(user, name):
 
         stand_query = None
         for inx, en in enumerate(en_list):
-            if inx==0:
+            if inx == 0:
                 stand_query = Q(material__standards__contains=en)
-            elif inx < len(en_list) - 1:
+            else:
                 stand_query |= Q(material__standards__contains=en)
 
         if stand_query:

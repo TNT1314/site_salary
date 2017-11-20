@@ -91,7 +91,7 @@ class MaterialInfo(ModelsBase):
             stand_list.append("V{}{}".format(self.bulk, self.bulk_unit))
 
         if self.weight:
-            stand_list.append("M{}{}".format(self.weight, self.weight_unit))
+            stand_list.append("G{}{}".format(self.weight, self.weight_unit))
 
         self.standards = "*".join(stand_list)
 

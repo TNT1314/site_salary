@@ -51,7 +51,7 @@ def user_get_quarter_salary_pager(user, p_size, p_numb, sortdatafield, sortorder
 
         query['company'] = user.company
 
-        sortdatafield = sortdatafield if sortdatafield else "add_time"
+        sortdatafield = sortdatafield if sortdatafield else ["-year", "-quarter", "employee__name"]
 
         sortorder = sortorder if sortorder else "desc"
 
@@ -59,6 +59,8 @@ def user_get_quarter_salary_pager(user, p_size, p_numb, sortdatafield, sortorder
 
         if sortorder == 'asc':
             m_query = QuarterSalary.objects.filter(**query).order_by(sortdatafield)
+        elif isinstance(sortdatafield, list):
+            m_query = QuarterSalary.objects.filter(**query).order_by(*sortdatafield)
         else:
             m_query = QuarterSalary.objects.filter(**query).order_by("-{}".format(sortdatafield))
 
@@ -91,7 +93,7 @@ def user_get_quarter_salary(user, id):
 
 def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
     """
-        添加企业员工季度工资记录
+        添加企业员工计件工资记录
     """
 
     data = dict()
@@ -149,7 +151,7 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
             data['name'] = m_quarter_salary.employee.name
         except IntegrityError:
             code = ApiCode.edilineerror.code
-            mess = "请勿为通一个人添加相同季度的工资记录！"
+            mess = "请勿为同一个人添加相同月份的计件工资记录！"
     else:
         code = ApiCode.linenoexists.code
         mess = ApiCode.linenoexists.mess
@@ -159,7 +161,7 @@ def user_add_quarter_salary(user, year, employee, quarter, remarks, items):
 
 def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items):
     """
-        修改企业员工季度工资记录
+        修改企业员工计件工资记录
     """
 
     data = dict()
@@ -225,22 +227,22 @@ def user_update_quarter_salary(user, id, year, employee, quarter, remarks, items
                     data['name'] = m_quarter_salary.employee.name
                 except IntegrityError:
                     code = ApiCode.edilineerror.code
-                    mess = "请勿为通一个人添加相同季度的工资记录！"
+                    mess = "请勿为同一个人添加相同月份的计件工资记录！"
             else:
                 code = ApiCode.edilineerror.code
-                mess = "已经审核的季度薪资不允许更改！"
+                mess = "已经审核的计件工资不允许更改！"
         else:
             code = ApiCode.linenoexists.code
             mess = u"人员记录不存在，请核实！"
     else:
         code = ApiCode.linenoexists.code
-        mess = u"季度薪资记录不存在，请核实！ "
+        mess = u"计件工资记录不存在，请核实！ "
     return code, mess, data
 
 
 def user_audit_quarter_salary(user, id):
     """
-        用户审核季度薪资结果
+        用户审核计件结果
     """
 
     data = dict()
@@ -259,8 +261,8 @@ def user_audit_quarter_salary(user, id):
             data['name'] = m_quarter.employee.name
         else:
             code = ApiCode.edilineerror.code
-            mess = u"季度薪资记录当前状态不能进行审核！ "
+            mess = u"不是新增状态的计件工资记录不能进行审核！ "
     else:
         code = ApiCode.linenoexists.code
-        mess = u"季度薪资记录不存在，请核实！ "
+        mess = u"计件工资记录不存在，请核实！ "
     return code, mess, data

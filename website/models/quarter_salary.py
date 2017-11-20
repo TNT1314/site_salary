@@ -64,6 +64,7 @@ class QuarterSalaryItem(ModelsBase):
         db_table = 'quarter_salary_item'
         app_label = 'website'
         verbose_name = verbose_name_plural = '季度工资明细表'
+        ordering = ['mat_name', 'mat_standards']
 
     def __unicode__(self):
         return u"{}({})".format(self.mat_name, self.mat_standards)

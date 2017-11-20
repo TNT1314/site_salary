@@ -38,7 +38,7 @@ def get_paging_index(p_size, p_number):
         :return:
     """
     start = p_size * p_number
-    end = p_size * (p_number+1) -1
+    end = p_size * (p_number+1)
 
     return start, end
 

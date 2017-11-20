@@ -62,7 +62,7 @@
         <setNextTemplate name="head"/>
             <spacer length="1cm"/>
             <para style='title'>
-                <b> {{ data.get("company").encode("utf-8") }}——季度薪资</b>
+                <b> {{ data.get("company").encode("utf-8") }}——计件薪资</b>
             </para>
             <para style="alignRight">
                 <b>编号：{{ data.get("year") }}-{{ data.get("quarter")}}-{{ data.get("employee").get("id") }}</b>
@@ -71,7 +71,7 @@
                 <tr>
                     <td>
                         <para style="noIndent">
-                            <b>年份季度：</b>
+                            <b>年份／月份：</b>
                         </para>
                     </td>
                     <td>

@@ -62,12 +62,12 @@ LOGGING = {
             'propagate': True
         },
         'django.request': {
-            'handlers': ['logfile', 'mail_admins', 'console'],
+            'handlers': ['logfile', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
         'api_view': {
-            'handlers': ['logfile', 'mail_admins', 'console'],
+            'handlers': ['logfile', 'mail_admins'],
             'level': 'DEBUG',
             'propagate': True
         },

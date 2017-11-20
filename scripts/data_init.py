@@ -32,7 +32,7 @@ MENUS = [
     {"code": "RLZY", "name": u"人力资源", "icon": "fa-users", "model": "", "desc": u"人力资源模块", "parent": ""},
     {"code": "RYXX", "name": u"人员信息", "icon": "fa-user", "model": "employee", "desc": u"企业人员管理", "parent": "RLZY"},
     {"code": "GJDJ", "name": u"工件定价", "icon": "fa-steam", "model": "processprice", "desc": u"加工工件计件价格管理", "parent": "RLZY"},
-    {"code": "JDGZ", "name": u"季度工资", "icon": "季度工资", "model": "quartersalary", "desc": u"季度工件计件工资管理", "parent": "RLZY"}
+    {"code": "JJGZ", "name": u"计件工资", "icon": "fa-yen", "model": "quartersalary", "desc": u"工件计件工资管理", "parent": "RLZY"}
 ]
 
 
@@ -117,7 +117,7 @@ GROUP_MENUS = {
         {"menu_code": "RLZY", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
         {"menu_code": "RYXX", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
         {"menu_code": "GJDJ", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
-        {"menu_code": "JDGZ", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":True, "p_del":False, "p_pri": True},
+        {"menu_code": "JJGZ", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":True, "p_del":False, "p_pri": True},
     ]
 }
 

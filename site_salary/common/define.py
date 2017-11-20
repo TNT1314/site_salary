@@ -106,13 +106,29 @@ ENUM_QUARTER_ALL = Enum(
     ONE=1,
     TWO=2,
     THR=3,
-    FOU=4
+    FOU=4,
+    FIV=5,
+    SIX=6,
+    SEV=7,
+    EGT=8,
+    NIN=9,
+    TEN=10,
+    ELE=11,
+    TWE=12
 )
 LIST_QUARTER_ALL = (
-    (ENUM_QUARTER_ALL.ONE, u'一季度'),
-    (ENUM_QUARTER_ALL.TWO, u'二季度'),
-    (ENUM_QUARTER_ALL.THR, u'三季度'),
-    (ENUM_QUARTER_ALL.FOU, u'四季度'),
+    (ENUM_QUARTER_ALL.ONE, u'一月'),
+    (ENUM_QUARTER_ALL.TWO, u'二月'),
+    (ENUM_QUARTER_ALL.THR, u'三月'),
+    (ENUM_QUARTER_ALL.FOU, u'四月'),
+    (ENUM_QUARTER_ALL.FIV, u'五月'),
+    (ENUM_QUARTER_ALL.SIX, u'六月'),
+    (ENUM_QUARTER_ALL.SEV, u'七月'),
+    (ENUM_QUARTER_ALL.EGT, u'八月'),
+    (ENUM_QUARTER_ALL.NIN, u'九月'),
+    (ENUM_QUARTER_ALL.TEN, u'十月'),
+    (ENUM_QUARTER_ALL.ELE, u'十一月'),
+    (ENUM_QUARTER_ALL.TWE, u'十二月'),
 )
 DICT_QUARTER_ALL = dict(LIST_QUARTER_ALL)
 

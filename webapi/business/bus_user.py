@@ -116,6 +116,37 @@ def get_user_info(user):
     return code, mess, data
 
 
+def change_user_info(user, id, avatar, password):
+    """
+        获取用户信息
+        :param user
+    """
+
+    data = dict()
+    code = ApiCode.success.code
+    mess = ApiCode.success.mess
+
+    if user.id == id and avatar or password:
+        m_user = CompanyUser.objects.get(pk=user.id)
+
+        fileds = list()
+        if avatar:
+            m_user.avatar = avatar
+            fileds.append("avatar")
+
+        if password:
+            m_user.password = password
+            fileds.append("password")
+
+        m_user.save(update_fields=fileds)
+
+        data["id"] = m_user.id
+    else:
+        code = ApiCode.recordserror.code
+        mess = ApiCode.recordserror.mess
+    return code, mess, data
+
+
 def search_group_menus(user):
     pass
 

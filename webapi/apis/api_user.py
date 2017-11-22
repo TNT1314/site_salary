@@ -22,7 +22,7 @@ from site_salary.common.apicode import ApiCode
 from site_salary.common.backformat import JsonResponse
 from webapi.business.bus_user import (
     generate_code_image, user_login, user_login_out, get_user_info,
-    get_user_menus, get_menus_permission
+    get_user_menus, get_menus_permission, change_user_info
 )
 
 
@@ -130,6 +130,30 @@ class UserInfoGet(CompanyUserApiView):
     class Meta:
         path = 'info/get'
 
+@site
+class UserInfoChange(CompanyUserApiView):
+    """
+        企业用户修改用户信息接口
+    """
+
+    def get_context(self, request, *args, **kwargs):
+
+        id = request.params.id
+        avatar = request.params.avatar
+        password = request.params.password
+
+        code, mess, data = change_user_info(request.user, id, avatar, password)
+
+        return JsonResponse(code, mess, data)
+
+    class Meta:
+        path = 'info/change'
+        param_fields = (
+            ('id', fields.IntegerField(required=True, help_text=u"用户唯一表示")),
+            ('avatar', fields.CharField(required=False, help_text=u"头像")),
+            ('password', fields.CharField(required=False, help_text="密码")),
+
+        )
 
 @site
 class UserMenuGet(CompanyUserApiView):

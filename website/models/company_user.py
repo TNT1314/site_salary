@@ -31,7 +31,7 @@ class CompanyUser(AbstractBaseUser, ModelsBase):
     name = models.CharField('真实姓名', max_length=100, unique=True, null=False, blank=False, help_text='真实姓名')
     mobile = models.BigIntegerField('电话号码', null=False, blank=False, unique=True, db_index=True, help_text='手机号码')
     email = models.EmailField('电子邮箱', null=True, blank=True, default=None, help_text='用于找回密码')
-    avatar = models.ImageField('头像', default=None, upload_to=upload_path, null=True, blank=True, help_text='个性头像')
+    avatar = models.TextField('头像', default=None, null=True, blank=True, help_text='个性头像')
     company = models.ForeignKey('CompanyInfo', null=False, blank=False, db_constraint=False,
                                 verbose_name='公司信息', on_delete=models.DO_NOTHING, db_index=True, help_text='对应公司')
     group = models.ForeignKey('GroupInfo', null=True, blank=True, db_constraint=False,

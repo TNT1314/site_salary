@@ -22,12 +22,13 @@ class S_P_CompanyUser(serializers.ModelSerializer):
 
     is_staff = serializers.SerializerMethodField()
     is_active = serializers.SerializerMethodField()
+    password = serializers.SerializerMethodField()
     company_name = serializers.SerializerMethodField()
 
     class Meta:
         model = CompanyUser
         fields = [
-            "id", "username", "name",
+            "id", "username", "name", "mobile", "email", "password", "avatar",
             "is_staff", "is_active", "company_name",
         ]
 
@@ -46,6 +47,14 @@ class S_P_CompanyUser(serializers.ModelSerializer):
             :return:
         """
         return u"正常" if obj.is_active else u"销户"
+
+    def get_password(self, obj):
+        """
+            密码选项
+            :param obj:
+            :return:
+        """
+        return u'**********'
 
     def get_company_name(self, obj):
         """

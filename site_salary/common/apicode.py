@@ -30,6 +30,7 @@ ApiCode = Enum(
     linenoexists=Enum(code=7, mess="请求的记录不存在！"),
     submitsecond=Enum(code=8, mess="重复提交！"),
     logincodeerr=Enum(code=10, mess="验证码实效，请重新获取！"),
+    recordserror=Enum(code=11, mess="没有数据权限！"),
 
     success=Enum(code=10000, mess="请求成功。"),
 )

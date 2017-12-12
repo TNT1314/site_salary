@@ -1,0 +1,25 @@
+
+
+
+
+
+
+
+
+-------------合作伙伴-------------
+
+id: 唯一主键
+code: 伙伴全称(拼音码)
+name: 伙伴全称
+short_name: 伙伴简称
+supplier: 是否供应商
+customer: 是否客户
+phone: 公司电话号码
+society_code: 统一社会信用代码
+linkman: 联系人
+linkman_phone: 联系人电话
+send_man: 送货联系人
+send_man_phone: 送货联系人电话
+address: 公司地址
+
+-------------合作伙伴-------------

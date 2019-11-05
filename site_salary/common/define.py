@@ -144,3 +144,31 @@ LIST_STATUS_ALL = (
 
 )
 DICT_STATUS_ALL = dict(LIST_STATUS_ALL)
+
+
+# 协议类型
+ENUM_PACT_TYPE = Enum(
+    JG='JG',
+    CG='CG',
+    XS='XS',
+)
+LIST_PACT_TYPE = (
+    (ENUM_PACT_TYPE.JG, u'加工'),
+    (ENUM_PACT_TYPE.CG, u'采购'),
+    (ENUM_PACT_TYPE.XS, u'销售'),
+)
+DICT_PACT_TYPE = dict(LIST_PACT_TYPE)
+
+
+# 状态
+ENUM_PACK_STATUS = Enum(
+    XZ='XZ',
+    SH='SH',
+    JY='JY',
+)
+LIST_PACK_STATUS = (
+    (ENUM_PACK_STATUS.XZ, u'新增'),
+    (ENUM_PACK_STATUS.SH, u'审核'),
+    (ENUM_PACK_STATUS.JY, u'禁用'),
+)
+DICT_PACK_STATUS = dict(LIST_PACK_STATUS)

@@ -5,7 +5,6 @@
 
 from django.contrib import admin
 
-
 admin.autodiscover()
 
 # 公司信息
@@ -41,7 +40,6 @@ admin.site.register(EmployeeInfo)
 from website.models.material_info import MaterialInfo
 admin.site.register(MaterialInfo)
 
-
 # 公司物料加工定价信息
 from website.models.process_price import ProcessPrice
 admin.site.register(ProcessPrice)
@@ -54,3 +52,11 @@ admin.site.register(QuarterSalary)
 from website.models.quarter_salary import QuarterSalaryItem
 admin.site.register(QuarterSalaryItem)
 
+# 公司合作伙伴
+from website.models.partner_info import PartnerInfo
+admin.site.register(PartnerInfo)
+
+# 加工定价协议
+from website.models.pact_price import PactPrice, PactPriceItem
+admin.site.register(PactPrice)
+admin.site.register(PactPriceItem)

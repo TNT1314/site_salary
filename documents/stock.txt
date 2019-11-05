@@ -1,11 +1,6 @@
 
 
 
-
-
-
-
-
 -------------合作伙伴-------------
 
 id: 唯一主键
@@ -23,3 +18,114 @@ send_man_phone: 送货联系人电话
 address: 公司地址
 
 -------------合作伙伴-------------
+
+
+-------------定价协议-------------
+
+主表
+id: 唯一主键
+pact_code: 自动生成唯一合同编号  HT＋2位类型＋4位伙伴ID + 伙伴合同编号
+pact_type: 合同类型（JG:加工 CG:采购 XS:销售）
+partner: 伙伴ID
+status: 状态（新建,审批,禁用）
+partner_code: 伙伴合同编号
+send_man: 接货人
+send_man: 接货人电话
+send_address: 送货地址
+aud_user: 审核人
+aud_time: 审核时间
+del_user: 禁用人
+del_time: 禁用时间
+
+明细
+parent: 主表ID
+material: 物料
+material_unit: 物料统计单位
+process_price: 加工价格（单位）
+loss_price: 赔偿价格（单位）
+
+-------------定价协议-------------
+
+
+-------------物料入库-------------
+
+主表
+id: 唯一主键
+code: 自动生成唯一出库编号  RK＋6位年月日 + 2位类型＋2位状态＋4位伙伴ID + 伙伴合同编号
+status: 单据状态
+bill_type: 正常入库,返厂入库
+bill_status: 正常,补单
+date: 入库日期
+pact_price: 定价协议
+partner: 伙伴id
+send_code: 对方送货单号
+
+明细
+parent: 主表ID
+material: 物料
+material_unit: 物料统计单位
+count: 入库数量
+process_price: 加工价格（单位）
+loss_price: 赔偿价格（单位）
+-------------物料入库-------------
+
+
+-------------物料库存-------------
+
+id: 唯一主键
+company: 公司
+partner: 伙伴
+material: 物料
+stock_type: 类型（正常，返厂）
+stock_count: 库存量
+stock_unit: 库存单位
+
+-------------物料库存-------------
+
+-------------库存变动表-------------
+
+time: 时间
+company: 公司
+code: 单据编号
+bill_type: 发生类型（正常入库,返厂入库,正常出库,返厂出库)
+bill_status: 正常，补单， 赔偿
+pact_price: 协议定价
+partner: 伙伴
+material: 物料
+begin_normal: 期初数量（正常）
+begin_return: 期初数量（返厂）
+happen_normal: 本期发生（正常）
+happen_return: 本期发生（返厂）
+end_normal: 期末数量（正常）
+end_return: 期末数量（返厂）
+material_price: 发生价格
+material_amount: 发生金额
+mateiral_unit: 库存单位
+
+-------------库存变动表-------------
+
+
+-------------物料出库-------------
+
+主表
+id: 唯一主键
+code: 自动生成唯一出库编号  CK＋2位类型＋4位伙伴ID + 伙伴合同编号
+status: 单据状态
+bill_type: 出库类型（正常出库,返厂出库）
+bill_status: 正常，补单，赔偿
+pact_price: 定价协议
+partner: 伙伴ID
+send_man: 接货人
+send_man: 接货人电话
+send_address: 送货地址
+
+明细
+parent: 主表ID
+material: 物料
+material_unit: 物料统计单位
+process_price: 加工价格（单位）
+loss_price: 赔偿价格（单位）
+
+-------------物料出库-------------
+
+

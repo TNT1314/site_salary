@@ -74,6 +74,16 @@ def split_chinese_english(pending_char):
     return chinese_group, english_group
 
 
+def check_contain_chinese(check_char):
+    """
+        判断字符串中是否存在中文
+    """
+    for ch in check_char:
+        if u'\u4e00' <= ch <= u'\u9fff':
+            return True
+    return False
+
+
 if __name__ == "__main__":
     test_chars = u"圣诞节法律书籍的jsdf撒娇了快点放假啦jksljkdj就啊水力发电就啊看世界"
     chi_list, eng_list = split_chinese_english(test_chars)

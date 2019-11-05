@@ -29,10 +29,13 @@ from website.models.company_info import CompanyInfo
 MENUS = [
     {"code": "JCXX", "name": u"基础信息", "icon": "fa-globe", "model": "", "desc": u"系统基础信息", "parent": ""},
     {"code": "WLXX", "name": u"物料信息", "icon": "fa-chain", "model": "material", "desc": u"基础物料资料管理", "parent": "JCXX"},
+    {"code": "HBXX", "name": u"伙伴信息", "icon": "fa-users", "model": "partner", "desc": u"合作伙伴管理", "parent": "JCXX"},
     {"code": "RLZY", "name": u"人力资源", "icon": "fa-users", "model": "", "desc": u"人力资源模块", "parent": ""},
     {"code": "RYXX", "name": u"人员信息", "icon": "fa-user", "model": "employee", "desc": u"企业人员管理", "parent": "RLZY"},
     {"code": "GJDJ", "name": u"工件定价", "icon": "fa-steam", "model": "processprice", "desc": u"加工工件计件价格管理", "parent": "RLZY"},
-    {"code": "JJGZ", "name": u"计件工资", "icon": "fa-yen", "model": "quartersalary", "desc": u"工件计件工资管理", "parent": "RLZY"}
+    {"code": "JJGZ", "name": u"计件工资", "icon": "fa-yen", "model": "quartersalary", "desc": u"工件计件工资管理", "parent": "RLZY"},
+    {"code": "CKGL", "name": u"仓库管理", "icon": "fa-dropbox", "model": "", "desc": u"仓库管理", "parent": ""},
+    {"code": "DJXY", "name": u"定价协议", "icon": "fa-file-text-o", "model": "pactprice", "desc": u"定价协议", "parent": "CKGL"},
 ]
 
 
@@ -65,7 +68,8 @@ def init_menus():
 
 
 COMPANYS = [
-    {"code": "HBSFCXGDJXC", "name": u"河北省阜城县国栋机械厂", "shot_name": u"国栋机械厂", "license":"131128600034813", "address": u"河北省阜城县古城镇西火星堂村1号"}
+    {"code": "HBSFCXGDJXC", "name": u"河北省阜城县国栋机械厂", "shot_name": u"国栋机械厂", "license":"131128600034813", "address": u"河北省阜城县古城镇西火星堂村1号"},
+    {"code": "GDSDGLJHWJC", "name": u"广东省大纲岭俊辉五金厂", "shot_name": u"俊辉五金厂", "license":"331148600034813", "address": u"广东省从化市大纲领1000号"}
 ]
 
 
@@ -90,7 +94,8 @@ def init_company():
         
 
 GROUPS = [
-    {"code": "HBSFCXGDJXCZ", "name":"河北省阜城县国栋机械厂组", "desc": u"河北省阜城县国栋机械厂权限列表"}
+    {"code": "HBSFCXGDJXCZ", "name":"河北省阜城县国栋机械厂组", "desc": u"河北省阜城县国栋机械厂权限列表"},
+    {"code": "GDSDGLJHWJCZ", "name":"广东省大纲岭俊辉五金厂组", "desc": u"广东省大纲岭俊辉五金厂权限列表"}
 ]
 
 
@@ -118,6 +123,11 @@ GROUP_MENUS = {
         {"menu_code": "RYXX", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
         {"menu_code": "GJDJ", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
         {"menu_code": "JJGZ", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":True, "p_del":False, "p_pri": True},
+    ],
+    "GDSDGLJHWJCZ": [
+        {"menu_code": "WLXX", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
+        {"menu_code": "HBXX", "p_inf": True, "p_add":True, "p_cha":True, "p_aud":False, "p_del":False, "p_pri": False},
+        {"menu_code": "DJXY", "p_inf": True, "p_add": True, "p_cha": True, "p_aud": False, "p_del": False, "p_pri": True},
     ]
 }
 
@@ -158,7 +168,9 @@ def init_group_menus():
 
 COMPANY_USERS = [
     {"company": "HBSFCXGDJXC", "username": "guodongjixie", "password": "ASDasd!@#123",
-     "name": u"刘美", "mobile": "18810958549", "email": "liumei@wormer.cn", "avatar": "", "group": "HBSFCXGDJXCZ"}
+     "name": u"刘美", "mobile": "18810958549", "email": "liumei@wormer.cn", "avatar": "", "group": "HBSFCXGDJXCZ"},
+    {"company": "GDSDGLJHWJC", "username": "wangxiuju", "password": "ASDasd!@#123",
+     "name": u"王秀菊", "mobile": "13726814989", "email": "wangxiuju@wormer.cn", "avatar": "", "group": "GDSDGLJHWJCZ"}
 ]
 
 

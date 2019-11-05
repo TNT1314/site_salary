@@ -26,7 +26,7 @@ class MenuInfo(ModelsBase):
 
     code = models.CharField('菜单编码', unique=True, max_length=10, null=True, blank=True)
     name = models.CharField('菜单名称', max_length=10, null=False, blank=False)
-    icon = models.CharField('菜单图标', max_length=10, null=False, blank=False)
+    icon = models.CharField('菜单图标', max_length=20, null=False, blank=False)
     model = models.CharField('模型名称', null=True, blank=True, max_length=100)
     parent = models.ForeignKey('MenuInfo', null=True, blank=True, db_constraint=False,
                                verbose_name='父级菜单', on_delete=models.DO_NOTHING, db_index=True, help_text='父级菜单')

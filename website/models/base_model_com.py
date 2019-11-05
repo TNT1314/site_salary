@@ -25,10 +25,10 @@ class ModelsBase(CompanyTimeFieldModel):
     valid = models.BooleanField("有效", default=True, null=False, db_index=True)
     remarks = models.CharField('备注', max_length=500, null=True, blank=True)
 
-    add_com_user = models.ForeignKey("CompanyInfo", default=None,
+    add_com_user = models.ForeignKey("CompanyUser", default=None,
             editable=False, null=True, blank=True, on_delete=models.DO_NOTHING,
             related_name='+', db_constraint=False, verbose_name='创建人员', db_index=True)
-    cha_com_user = models.ForeignKey("CompanyInfo", default=None,
+    cha_com_user = models.ForeignKey("CompanyUser", default=None,
             editable=False, null=True, blank=True, on_delete=models.DO_NOTHING,
             related_name='+', db_constraint=False, verbose_name='修改人员', db_index=True)
 

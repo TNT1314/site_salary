@@ -16,7 +16,7 @@ Pillow==4.3.0
 pkginfo==1.4.1
 Pygments==2.2.0
 pypinyin==0.27.0
-requests==2.18.4
+requests==2.20.0
 requests-toolbelt==0.8.0
 six==1.11.0
 tqdm==4.19.4
